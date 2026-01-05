@@ -49,10 +49,12 @@ Contributions welcome.
 
 Actually implemented things
 
-rdfs:range --> sh:class
-owl:onClass --> sh:class
-owl:minQualifiedCardinality --> sh:minCount
-owl:maxQualifiedCardinality --> sh:minCount
+| owl                         | shacl       |
+| --------------------------- | ----------- |
+| rdfs:range                  | sh:class    |
+| owl:onClass                 | sh:class    |
+| owl:minQualifiedCardinality | sh:minCount |
+| owl:maxQualifiedCardinality | sh:maxCount |
 
 See table from <https://spinrdf.org/shacl-and-owl.html> for an idea of what
 else could be implemented.
