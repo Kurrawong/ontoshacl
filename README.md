@@ -80,5 +80,5 @@ Why not just use this one?
 I wanted control over the domain/range restrictions and also needed to include proper
 messaging for the sh:properties so that fixing/reading validation errors is easier.
 
-This implementation is more comprehensive than what I have done here, but for what I
+That implementation is more comprehensive than what I have done here, but for what I
 need right now (2026-01-05) this doesn't matter.
