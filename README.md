@@ -2,6 +2,12 @@
 
 A self contained script to generate SHACL rules from an OWL ontology.
 
+> [!WARNING]
+> This script has been built out just enough to let me do some basic
+> validation on the RiC-O ontology.
+> It could be extended to do more, but it's not worth doing that right now.
+> See the disclaimer below for details
+
 Pseudo code implementation:
 
     For each class in the ontology:
@@ -62,3 +68,17 @@ else could be implemented.
 ## Contact
 
 Lawson Lewis <mailto:lawson@kurrawong.ai>
+
+## See Also
+
+SHACL Playground implementation of owl2shacl based on topquadrant's open source API.
+
+<https://shacl-play.sparna.fr/play/convert>
+
+Why not just use this one?
+
+I wanted control over the domain/range restrictions and also needed to include proper
+messaging for the sh:properties so that fixing/reading validation errors is easier.
+
+This implementation is more comprehensive than what I have done here, but for what I
+need right now (2026-01-05) this doesn't matter.
