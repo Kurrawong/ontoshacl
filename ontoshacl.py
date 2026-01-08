@@ -59,8 +59,6 @@ from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF, RDFS, SDO, SH, XSD
 
-SCRIPT_VERSION = "0.0.1"
-
 
 @dataclass(frozen=True)
 class Restriction:
@@ -162,10 +160,14 @@ class Ontology:
             min_cardinality = self.graph.value(
                 restriction_uri, OWL.minQualifiedCardinality, None, default=None
             )
+            if min_cardinality:
+                min_cardinality = Literal(min_cardinality, datatype=XSD.integer)
             # TODO: handle unqualified min_cardinality
             max_cardinality = self.graph.value(
                 restriction_uri, OWL.maxQualifiedCardinality, None, default=None
             )
+            if max_cardinality:
+                max_cardinality = Literal(max_cardinality, datatype=XSD.integer)
             # TODO: handle unqualified max_cardinality
             restriction = Restriction(
                 on_klass=on_klass,
@@ -412,32 +414,43 @@ class Shacl:
 
 
 if __name__ == "__main__":
+    # ------------------------------------------------------------------------------------ #
+    # Configuration
+    # ------------------------------------------------------------------------------------ #
+
+    SCRIPT_VERSION = "0.0.1"
+
+    # Base Ontology details
     src = Path(__file__).parent / "example_data/rico.ttl"
     uri = URIRef("https://www.ica.org/standards/RiC/ontology#")
+
+    # Target Validator details
+    target = Path(__file__).parent / "example_data/rico-shacl.ttl"
+    namespace = Namespace("https://kurrawong.ai/validator/rico#")
+    shacl_opts = {
+        "base_ontology_prefix": "rico",
+        "namespace": namespace,
+        "versionIRI": namespace["0.0.1"],
+        "creator": URIRef("https://kurrawong.ai/people#lawson-lewis"),
+        "name": Literal("RiC-O Validator"),
+        "description": Literal(
+            "Unofficial SHACL Shapes Validator for the Records in Contect Ontology [RiC-O]"
+        ),
+        "publisher": URIRef("https://kurrawong.ai"),
+        "include_domain_range_restrictions": True,
+        "domain_range_restriction_severity": SH.Warning,
+    }
+
+    # ------------------------------------------------------------------------------------ #
+    # End
+    # ------------------------------------------------------------------------------------ #
 
     print(f"OntoSHACL:v{SCRIPT_VERSION}")
     print("-" * 80)
     print(f"\nExtracting SHACL Rules from the OWL Ontology at:\n\n\t{src}\n\n")
 
-    rico = Ontology(src=src, uri=uri)
-
-    namespace = Namespace("https://kurrawong.ai/validator/rico#")
-    shacl = Shacl(
-        base_ontology=rico,
-        base_ontology_prefix="rico",
-        namespace=namespace,
-        versionIRI=namespace["0.0.1"],
-        creator=URIRef("https://kurrawong.ai/people#lawson-lewis"),
-        name=Literal("RiC-O Validator"),
-        description=Literal(
-            "Unofficial SHACL Shapes Validator for the Records in Contect Ontology [RiC-O]"
-        ),
-        publisher=URIRef("https://kurrawong.ai"),
-        include_domain_range_restrictions=True,
-        domain_range_restriction_severity=SH.Warning,
-    )
-
-    target = Path(__file__).parent / "example_data/rico-shacl.ttl"
+    ont = Ontology(src=src, uri=uri)
+    shacl = Shacl(base_ontology=ont, **shacl_opts)
     target.write_text(str(shacl))
     print(
         f"Generated\n"
