@@ -13,6 +13,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- A rico:AccumulationRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:AccumulationRelation must be a rico:Agent""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:AccumulationRelation ;
             sh:message """
 - The object of the rico:accumulationRelation_role property on a rico:AccumulationRelation must be a rico:AccumulationRelation""" ;
@@ -37,16 +47,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             ) ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- A rico:AccumulationRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:AccumulationRelation must be a rico:Agent""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:AccumulationRelation ;
 .
@@ -55,14 +55,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     a sh:NodeShape ;
     rdfs:isDefinedBy : ;
     sh:property 
-        [
-            a sh:PropertyShape ;
-            sh:class rico:ActivityDocumentationRelation ;
-            sh:message """
-- The object of the rico:activityDocumentationRelation_role property on a rico:ActivityDocumentationRelation must be a rico:ActivityDocumentationRelation""" ;
-            sh:path rico:activityDocumentationRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
         [
             a sh:PropertyShape ;
             sh:message """
@@ -81,6 +73,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             ) ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:ActivityDocumentationRelation ;
+            sh:message """
+- The object of the rico:activityDocumentationRelation_role property on a rico:ActivityDocumentationRelation must be a rico:ActivityDocumentationRelation""" ;
+            sh:path rico:activityDocumentationRelation_role ;
+            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -139,14 +139,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:AgentControlRelation ;
-            sh:message """
-- The object of the rico:agentControlRelation_role property on a rico:AgentControlRelation must be a rico:AgentControlRelation""" ;
-            sh:path rico:agentControlRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
 - A rico:AgentControlRelation must have at least 1 rico:relationHasSource statements
@@ -154,6 +146,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:AgentControlRelation ;
+            sh:message """
+- The object of the rico:agentControlRelation_role property on a rico:AgentControlRelation must be a rico:AgentControlRelation""" ;
+            sh:path rico:agentControlRelation_role ;
+            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -174,14 +174,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:AgentHierarchicalRelation ;
-            sh:message """
-- The object of the rico:agentHierarchicalRelation_role property on a rico:AgentHierarchicalRelation must be a rico:AgentHierarchicalRelation""" ;
-            sh:path rico:agentHierarchicalRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
 - A rico:AgentHierarchicalRelation must have at least 1 rico:relationHasSource statements
@@ -189,6 +181,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:AgentHierarchicalRelation ;
+            sh:message """
+- The object of the rico:agentHierarchicalRelation_role property on a rico:AgentHierarchicalRelation must be a rico:AgentHierarchicalRelation""" ;
+            sh:path rico:agentHierarchicalRelation_role ;
+            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -226,24 +226,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
-- The object of the rico:isAgentAssociatedWithAgent property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:isAgentAssociatedWithAgent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Mandate ;
-            sh:message """
-- The object of the rico:authorizedBy property on a rico:Agent must be a rico:Mandate""" ;
-            sh:path rico:authorizedBy ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:hasOrHadSubordinate property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:hasOrHadSubordinate ;
+- The object of the rico:isSubordinateToTransitive property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:isSubordinateToTransitive ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -256,122 +240,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Activity ;
+            sh:class rico:RecordResource ;
             sh:message """
-- The object of the rico:performsOrPerformed property on a rico:Agent must be a rico:Activity""" ;
-            sh:path rico:performsOrPerformed ;
+- The object of the rico:isPublisherOf property on a rico:Agent must be a rico:RecordResource""" ;
+            sh:path rico:isPublisherOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
-- The object of the rico:hadSubordinate property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:hadSubordinate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:hasOrHadWorkRelationWith property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:hasOrHadWorkRelationWith ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:hasDirectSubordinate property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:hasDirectSubordinate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:isSubordinateToTransitive property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:isSubordinateToTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:AgentName ;
-            sh:message """
-- The object of the rico:hasOrHadAgentName property on a rico:Agent must be a rico:AgentName""" ;
-            sh:path rico:hasOrHadAgentName ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:hasOrHadJurisdiction property on a rico:Agent must be a rico:Place""" ;
-            sh:path rico:hasOrHadJurisdiction ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:isDirectSubordinateTo property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:isDirectSubordinateTo ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:isOrWasSubordinateTo property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:isOrWasSubordinateTo ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:isOrWasControllerOf property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:isOrWasControllerOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:hasOrHadAuthorityOver property on a rico:Agent must be a rico:Thing""" ;
-            sh:path rico:hasOrHadAuthorityOver ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:wasSubordinateTo property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:wasSubordinateTo ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:isAgentAssociatedWithPlace property on a rico:Agent must be a rico:Place""" ;
-            sh:path rico:isAgentAssociatedWithPlace ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:agentHasOrHadLocation property on a rico:Agent must be a rico:Place""" ;
-            sh:path rico:agentHasOrHadLocation ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:hasSuccessor property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:hasSuccessor ;
+- The object of the rico:isSuccessorOf property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:isSuccessorOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -386,8 +266,64 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
-- The object of the rico:hasSubordinateTransitive property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:hasSubordinateTransitive ;
+- The object of the rico:isAgentAssociatedWithAgent property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:isAgentAssociatedWithAgent ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:isOrWasSubordinateTo property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:isOrWasSubordinateTo ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:hasDirectSubordinate property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:hasDirectSubordinate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:hadSubordinate property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:hadSubordinate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:isDirectSubordinateTo property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:isDirectSubordinateTo ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:isAgentAssociatedWithPlace property on a rico:Agent must be a rico:Place""" ;
+            sh:path rico:isAgentAssociatedWithPlace ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:MandateRelation ;
+            sh:message """
+- The object of the rico:isAuthorizingAgentInMandateRelation property on a rico:Agent must be a rico:MandateRelation""" ;
+            sh:path rico:isAuthorizingAgentInMandateRelation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:hasSuccessor property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:hasSuccessor ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -400,26 +336,90 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
+            sh:class rico:Activity ;
+            sh:message """
+- The object of the rico:performsOrPerformed property on a rico:Agent must be a rico:Activity""" ;
+            sh:path rico:performsOrPerformed ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
-- The object of the rico:isSuccessorOf property on a rico:Agent must be a rico:Agent""" ;
-            sh:path rico:isSuccessorOf ;
+- The object of the rico:hasSubordinateTransitive property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:hasSubordinateTransitive ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
+            sh:class rico:Agent ;
             sh:message """
-- The object of the rico:isPublisherOf property on a rico:Agent must be a rico:RecordResource""" ;
-            sh:path rico:isPublisherOf ;
+- The object of the rico:wasSubordinateTo property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:wasSubordinateTo ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:MandateRelation ;
+            sh:class rico:Place ;
             sh:message """
-- The object of the rico:isAuthorizingAgentInMandateRelation property on a rico:Agent must be a rico:MandateRelation""" ;
-            sh:path rico:isAuthorizingAgentInMandateRelation ;
+- The object of the rico:hasOrHadJurisdiction property on a rico:Agent must be a rico:Place""" ;
+            sh:path rico:hasOrHadJurisdiction ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Mandate ;
+            sh:message """
+- The object of the rico:authorizedBy property on a rico:Agent must be a rico:Mandate""" ;
+            sh:path rico:authorizedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:isOrWasControllerOf property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:isOrWasControllerOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:AgentName ;
+            sh:message """
+- The object of the rico:hasOrHadAgentName property on a rico:Agent must be a rico:AgentName""" ;
+            sh:path rico:hasOrHadAgentName ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:hasOrHadSubordinate property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:hasOrHadSubordinate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:hasOrHadWorkRelationWith property on a rico:Agent must be a rico:Agent""" ;
+            sh:path rico:hasOrHadWorkRelationWith ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:hasOrHadAuthorityOver property on a rico:Agent must be a rico:Thing""" ;
+            sh:path rico:hasOrHadAuthorityOver ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:agentHasOrHadLocation property on a rico:Agent must be a rico:Place""" ;
+            sh:path rico:agentHasOrHadLocation ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Agent ;
@@ -431,14 +431,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:AgentTemporalRelation ;
-            sh:message """
-- The object of the rico:agentTemporalRelation_role property on a rico:AgentTemporalRelation must be a rico:AgentTemporalRelation""" ;
-            sh:path rico:agentTemporalRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
 - A rico:AgentTemporalRelation must have at least 1 rico:relationHasTarget statements
@@ -446,6 +438,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:AgentTemporalRelation ;
+            sh:message """
+- The object of the rico:agentTemporalRelation_role property on a rico:AgentTemporalRelation must be a rico:AgentTemporalRelation""" ;
+            sh:path rico:agentTemporalRelation_role ;
+            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -492,18 +492,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         [
             a sh:PropertyShape ;
             sh:class rico:Appellation ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
+- A rico:AppellationRelation must be the target of exactly 1 rico:relationHasSource statements
 - The object of the rico:relationHasSource property on a rico:AppellationRelation must be a rico:Appellation""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:AppellationRelation ;
-            sh:message """
-- The object of the rico:appellationRelation_role property on a rico:AppellationRelation must be a rico:AppellationRelation""" ;
-            sh:path rico:appellationRelation_role ;
-            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -514,6 +509,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:AppellationRelation ;
+            sh:message """
+- The object of the rico:appellationRelation_role property on a rico:AppellationRelation must be a rico:AppellationRelation""" ;
+            sh:path rico:appellationRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:AppellationRelation ;
 .
@@ -522,14 +525,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     a sh:NodeShape ;
     rdfs:isDefinedBy : ;
     sh:property 
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isOrWasAppellationOf property on a rico:Appellation must be a rico:Thing""" ;
-            sh:path rico:isOrWasAppellationOf ;
-            sh:severity sh:Warning ;
-        ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:Date ;
@@ -544,6 +539,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:wasUsedToDate property on a rico:Appellation must be a rico:Date""" ;
             sh:path rico:wasUsedToDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isOrWasAppellationOf property on a rico:Appellation must be a rico:Thing""" ;
+            sh:path rico:isOrWasAppellationOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Appellation ;
@@ -590,24 +593,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Record ;
-            sh:message """
-- A rico:AuthorshipRelation must have at least 1 rico:relationHasSource statements
-- The object of the rico:relationHasSource property on a rico:AuthorshipRelation must be a rico:Record""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:AuthorshipRelation ;
-            sh:message """
-- The object of the rico:authorshipRelation_role property on a rico:AuthorshipRelation must be a rico:AuthorshipRelation""" ;
-            sh:path rico:authorshipRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:message """
 - A rico:AuthorshipRelation must have at least 1 rico:relationHasTarget statements
 - The object of the rico:relationHasTarget property on a rico:AuthorshipRelation must be one of ['rico:Group', 'rico:Person', 'rico:Position']""" ;
@@ -628,6 +613,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             ) ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Record ;
+            sh:message """
+- A rico:AuthorshipRelation must have at least 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:AuthorshipRelation must be a rico:Record""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:AuthorshipRelation ;
+            sh:message """
+- The object of the rico:authorshipRelation_role property on a rico:AuthorshipRelation must be a rico:AuthorshipRelation""" ;
+            sh:path rico:authorshipRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:AuthorshipRelation ;
 .
@@ -702,16 +705,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
-- The object of the rico:isOrWasContentTypeOfSomeMembersOf property on a rico:ContentType must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasContentTypeOfSomeMembersOf ;
+- The object of the rico:isOrWasContentTypeOfAllMembersOf property on a rico:ContentType must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasContentTypeOfAllMembersOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
-- The object of the rico:isOrWasContentTypeOfAllMembersOf property on a rico:ContentType must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasContentTypeOfAllMembersOf ;
+- The object of the rico:isOrWasContentTypeOfSomeMembersOf property on a rico:ContentType must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasContentTypeOfSomeMembersOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:ContentType ;
@@ -740,16 +743,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:CorporateBody ;
             sh:message """
-- The object of the rico:resultedFromTheMergerOf property on a rico:CorporateBody must be a rico:CorporateBody""" ;
-            sh:path rico:resultedFromTheMergerOf ;
+- The object of the rico:wasSplitInto property on a rico:CorporateBody must be a rico:CorporateBody""" ;
+            sh:path rico:wasSplitInto ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:CorporateBody ;
             sh:message """
-- The object of the rico:wasSplitInto property on a rico:CorporateBody must be a rico:CorporateBody""" ;
-            sh:path rico:wasSplitInto ;
+- The object of the rico:resultedFromTheSplitOf property on a rico:CorporateBody must be a rico:CorporateBody""" ;
+            sh:path rico:resultedFromTheSplitOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -764,8 +767,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:CorporateBody ;
             sh:message """
-- The object of the rico:resultedFromTheSplitOf property on a rico:CorporateBody must be a rico:CorporateBody""" ;
-            sh:path rico:resultedFromTheSplitOf ;
+- The object of the rico:resultedFromTheMergerOf property on a rico:CorporateBody must be a rico:CorporateBody""" ;
+            sh:path rico:resultedFromTheMergerOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -825,24 +828,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- A rico:CreationRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:CreationRelation must be a rico:Agent""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:CreationRelation ;
-            sh:message """
-- The object of the rico:creationRelation_role property on a rico:CreationRelation must be a rico:CreationRelation""" ;
-            sh:path rico:creationRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:RoleType ;
             sh:message """
 - The object of the rico:creationWithRole property on a rico:CreationRelation must be a rico:RoleType""" ;
@@ -867,6 +852,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             ) ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- A rico:CreationRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:CreationRelation must be a rico:Agent""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:CreationRelation ;
+            sh:message """
+- The object of the rico:creationRelation_role property on a rico:CreationRelation must be a rico:CreationRelation""" ;
+            sh:path rico:creationRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:CreationRelation ;
 .
@@ -877,10 +880,66 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasWithin property on a rico:Date must be a rico:Date""" ;
+            sh:path rico:hasWithin ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:intersects property on a rico:Date must be a rico:Date""" ;
+            sh:path rico:intersects ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordSet ;
+            sh:message """
+- The object of the rico:isOrWasCreationDateOfMostMembersOf property on a rico:Date must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasCreationDateOfMostMembersOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:isPublicationDateOf property on a rico:Date must be a rico:RecordResource""" ;
+            sh:path rico:isPublicationDateOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Event ;
+            sh:message """
+- The object of the rico:isDateOfOccurrenceOf property on a rico:Date must be a rico:Event""" ;
+            sh:path rico:isDateOfOccurrenceOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordSet ;
+            sh:message """
+- The object of the rico:isOrWasCreationDateOfSomeMembersOf property on a rico:Date must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasCreationDateOfSomeMembersOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
 - The object of the rico:isOrWasCreationDateOfAllMembersOf property on a rico:Date must be a rico:RecordSet""" ;
             sh:path rico:isOrWasCreationDateOfAllMembersOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:isWithin property on a rico:Date must be a rico:Date""" ;
+            sh:path rico:isWithin ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -895,96 +954,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:isDateAssociatedWith property on a rico:Date must be a rico:Thing""" ;
-            sh:path rico:isDateAssociatedWith ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasWithin property on a rico:Date must be a rico:Date""" ;
-            sh:path rico:hasWithin ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
 - The object of the rico:isBeginningDateOf property on a rico:Date must be a rico:Thing""" ;
             sh:path rico:isBeginningDateOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordSet ;
-            sh:message """
-- The object of the rico:isOrWasCreationDateOfSomeMembersOf property on a rico:Date must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasCreationDateOfSomeMembersOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:isWithin property on a rico:Date must be a rico:Date""" ;
-            sh:path rico:isWithin ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordSet ;
-            sh:message """
-- The object of the rico:isOrWasCreationDateOfMostMembersOf property on a rico:Date must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasCreationDateOfMostMembersOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:isEndDateOf property on a rico:Date must be a rico:Thing""" ;
-            sh:path rico:isEndDateOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:intersects property on a rico:Date must be a rico:Date""" ;
-            sh:path rico:intersects ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isPublicationDateOf property on a rico:Date must be a rico:RecordResource""" ;
-            sh:path rico:isPublicationDateOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:isDeathDateOf property on a rico:Date must be a rico:Person""" ;
-            sh:path rico:isDeathDateOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Event ;
-            sh:message """
-- The object of the rico:isDateOfOccurrenceOf property on a rico:Date must be a rico:Event""" ;
-            sh:path rico:isDateOfOccurrenceOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isModificationDateOf property on a rico:Date must be a rico:Thing""" ;
-            sh:path rico:isModificationDateOf ;
+- The object of the rico:isLastUpdateDateOf property on a rico:Date must be a rico:Thing""" ;
+            sh:path rico:isLastUpdateDateOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -997,10 +976,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Thing ;
+            sh:class rico:Person ;
             sh:message """
-- The object of the rico:isLastUpdateDateOf property on a rico:Date must be a rico:Thing""" ;
-            sh:path rico:isLastUpdateDateOf ;
+- The object of the rico:isDeathDateOf property on a rico:Date must be a rico:Person""" ;
+            sh:path rico:isDeathDateOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1015,8 +994,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:isDestructionDateOf property on a rico:Date must be a rico:Thing""" ;
-            sh:path rico:isDestructionDateOf ;
+- The object of the rico:isEndDateOf property on a rico:Date must be a rico:Thing""" ;
+            sh:path rico:isEndDateOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1025,6 +1004,30 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:isToUseDateOf property on a rico:Date must be a rico:Appellation""" ;
             sh:path rico:isToUseDateOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isDateAssociatedWith property on a rico:Date must be a rico:Thing""" ;
+            sh:path rico:isDateAssociatedWith ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isModificationDateOf property on a rico:Date must be a rico:Thing""" ;
+            sh:path rico:isModificationDateOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isDestructionDateOf property on a rico:Date must be a rico:Thing""" ;
+            sh:path rico:isDestructionDateOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Date ;
@@ -1057,14 +1060,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:relationHasSource property on a rico:DerivationRelation must be a rico:Instantiation""" ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:DerivationRelation ;
             sh:message """
 - The object of the rico:derivationRelation_role property on a rico:DerivationRelation must be a rico:DerivationRelation""" ;
@@ -1080,6 +1075,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A rico:DerivationRelation must be the target of exactly 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:DerivationRelation must be a rico:Instantiation""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:DerivationRelation ;
 .
@@ -1090,11 +1096,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:DescendanceRelation ;
+            sh:class rico:Person ;
             sh:message """
-- The object of the rico:descendanceRelation_role property on a rico:DescendanceRelation must be a rico:DescendanceRelation""" ;
-            sh:path rico:descendanceRelation_role ;
-            sh:severity sh:Warning ;
+- A rico:DescendanceRelation must have at least 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:DescendanceRelation must be a rico:Person""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -1108,13 +1116,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Person ;
+            sh:class rico:DescendanceRelation ;
             sh:message """
-- A rico:DescendanceRelation must have at least 1 rico:relationHasSource statements
-- The object of the rico:relationHasSource property on a rico:DescendanceRelation must be a rico:Person""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
+- The object of the rico:descendanceRelation_role property on a rico:DescendanceRelation must be a rico:DescendanceRelation""" ;
+            sh:path rico:descendanceRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:DescendanceRelation ;
 .
@@ -1148,6 +1154,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- A rico:EventRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:EventRelation must be a rico:Thing""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:EventRelation ;
             sh:message """
 - The object of the rico:eventRelation_role property on a rico:EventRelation must be a rico:EventRelation""" ;
@@ -1163,16 +1179,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- A rico:EventRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:EventRelation must be a rico:Thing""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:EventRelation ;
 .
@@ -1183,18 +1189,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Event ;
+            sh:class rico:Date ;
             sh:message """
-- The object of the rico:isDirectSubeventOf property on a rico:Event must be a rico:Event""" ;
-            sh:path rico:isDirectSubeventOf ;
+- The object of the rico:occurredAtDate property on a rico:Event must be a rico:Date""" ;
+            sh:path rico:occurredAtDate ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Event ;
+            sh:class rico:EventType ;
             sh:message """
-- The object of the rico:hasSubeventTransitive property on a rico:Event must be a rico:Event""" ;
-            sh:path rico:hasSubeventTransitive ;
+- The object of the rico:hasEventType property on a rico:Event must be a rico:EventType""" ;
+            sh:path rico:hasEventType ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1203,6 +1209,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:affectsOrAffected property on a rico:Event must be a rico:Thing""" ;
             sh:path rico:affectsOrAffected ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:hasOrHadParticipant property on a rico:Event must be a rico:Thing""" ;
+            sh:path rico:hasOrHadParticipant ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1225,24 +1239,32 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Event ;
             sh:message """
-- The object of the rico:hasDirectSubevent property on a rico:Event must be a rico:Event""" ;
-            sh:path rico:hasDirectSubevent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Event ;
-            sh:message """
 - The object of the rico:wasSubeventOf property on a rico:Event must be a rico:Event""" ;
             sh:path rico:wasSubeventOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Date ;
+            sh:class rico:Event ;
             sh:message """
-- The object of the rico:occurredAtDate property on a rico:Event must be a rico:Date""" ;
-            sh:path rico:occurredAtDate ;
+- The object of the rico:hasSubeventTransitive property on a rico:Event must be a rico:Event""" ;
+            sh:path rico:hasSubeventTransitive ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Event ;
+            sh:message """
+- The object of the rico:isDirectSubeventOf property on a rico:Event must be a rico:Event""" ;
+            sh:path rico:isDirectSubeventOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Event ;
+            sh:message """
+- The object of the rico:isOrWasSubeventOf property on a rico:Event must be a rico:Event""" ;
+            sh:path rico:isOrWasSubeventOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1263,22 +1285,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Event ;
-            sh:message """
-- The object of the rico:isOrWasSubeventOf property on a rico:Event must be a rico:Event""" ;
-            sh:path rico:isOrWasSubeventOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:hasOrHadParticipant property on a rico:Event must be a rico:Thing""" ;
-            sh:path rico:hasOrHadParticipant ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
 - The object of the rico:isEventAssociatedWith property on a rico:Event must be a rico:Thing""" ;
@@ -1287,10 +1293,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:EventType ;
+            sh:class rico:Event ;
             sh:message """
-- The object of the rico:hasEventType property on a rico:Event must be a rico:EventType""" ;
-            sh:path rico:hasEventType ;
+- The object of the rico:hasDirectSubevent property on a rico:Event must be a rico:Event""" ;
+            sh:path rico:hasDirectSubevent ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Event ;
@@ -1317,14 +1323,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isExtentOf property on a rico:Extent must be a rico:Thing""" ;
-            sh:path rico:isExtentOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:ExtentType ;
             sh:message """
 - The object of the rico:hasExtentType property on a rico:Extent must be a rico:ExtentType""" ;
@@ -1337,6 +1335,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:hasUnitOfMeasurement property on a rico:Extent must be a rico:UnitOfMeasurement""" ;
             sh:path rico:hasUnitOfMeasurement ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isExtentOf property on a rico:Extent must be a rico:Thing""" ;
+            sh:path rico:isExtentOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Extent ;
@@ -1363,14 +1369,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:FamilyRelation ;
-            sh:message """
-- The object of the rico:familyRelation_role property on a rico:FamilyRelation must be a rico:FamilyRelation""" ;
-            sh:path rico:familyRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
 - A rico:FamilyRelation must have at least 2 rico:relationConnects statements
@@ -1378,6 +1376,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "2"^^xsd:nonNegativeInteger ;
             sh:path rico:relationConnects ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:FamilyRelation ;
+            sh:message """
+- The object of the rico:familyRelation_role property on a rico:FamilyRelation must be a rico:FamilyRelation""" ;
+            sh:path rico:familyRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:FamilyRelation ;
 .
@@ -1443,10 +1449,34 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:Person ;
+            sh:message """
+- The object of the rico:hasOrHadLeader property on a rico:Group must be a rico:Person""" ;
+            sh:path rico:hasOrHadLeader ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Group ;
             sh:message """
-- The object of the rico:hasDirectSubdivision property on a rico:Group must be a rico:Group""" ;
-            sh:path rico:hasDirectSubdivision ;
+- The object of the rico:isSubdivisionOfTransitive property on a rico:Group must be a rico:Group""" ;
+            sh:path rico:isSubdivisionOfTransitive ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Group ;
+            sh:message """
+- The object of the rico:isOrWasSubdivisionOf property on a rico:Group must be a rico:Group""" ;
+            sh:path rico:isOrWasSubdivisionOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Position ;
+            sh:message """
+- The object of the rico:hasOrHadPosition property on a rico:Group must be a rico:Position""" ;
+            sh:path rico:hasOrHadPosition ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1469,22 +1499,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Group ;
             sh:message """
-- The object of the rico:isDirectSubdivisionOf property on a rico:Group must be a rico:Group""" ;
-            sh:path rico:isDirectSubdivisionOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Group ;
-            sh:message """
-- The object of the rico:isSubdivisionOfTransitive property on a rico:Group must be a rico:Group""" ;
-            sh:path rico:isSubdivisionOfTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Group ;
-            sh:message """
 - The object of the rico:hadSubdivision property on a rico:Group must be a rico:Group""" ;
             sh:path rico:hadSubdivision ;
             sh:severity sh:Warning ;
@@ -1493,8 +1507,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
-- The object of the rico:hasOrHadLeader property on a rico:Group must be a rico:Person""" ;
-            sh:path rico:hasOrHadLeader ;
+- The object of the rico:hasOrHadMember property on a rico:Group must be a rico:Person""" ;
+            sh:path rico:hasOrHadMember ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Group ;
+            sh:message """
+- The object of the rico:isDirectSubdivisionOf property on a rico:Group must be a rico:Group""" ;
+            sh:path rico:isDirectSubdivisionOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Group ;
+            sh:message """
+- The object of the rico:hasDirectSubdivision property on a rico:Group must be a rico:Group""" ;
+            sh:path rico:hasDirectSubdivision ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1503,30 +1533,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:hasSubdivisionTransitive property on a rico:Group must be a rico:Group""" ;
             sh:path rico:hasSubdivisionTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Position ;
-            sh:message """
-- The object of the rico:hasOrHadPosition property on a rico:Group must be a rico:Position""" ;
-            sh:path rico:hasOrHadPosition ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Group ;
-            sh:message """
-- The object of the rico:isOrWasSubdivisionOf property on a rico:Group must be a rico:Group""" ;
-            sh:path rico:isOrWasSubdivisionOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:hasOrHadMember property on a rico:Group must be a rico:Person""" ;
-            sh:path rico:hasOrHadMember ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Group ;
@@ -1539,19 +1545,22 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         [
             a sh:PropertyShape ;
             sh:class rico:Group ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
-- A rico:GroupSubdivisionRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:GroupSubdivisionRelation must be a rico:Group""" ;
+- A rico:GroupSubdivisionRelation must be the target of exactly 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:GroupSubdivisionRelation must be a rico:Group""" ;
             sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
+            sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:Group ;
             sh:message """
-- The object of the rico:relationHasSource property on a rico:GroupSubdivisionRelation must be a rico:Group""" ;
-            sh:path rico:relationHasSource ;
+- A rico:GroupSubdivisionRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:GroupSubdivisionRelation must be a rico:Group""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
         ] ,
         [
@@ -1617,128 +1626,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Instantiation ;
             sh:message """
-- The object of the rico:wasComponentOf property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:wasComponentOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:hasOrHadDerivedInstantiation property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:hasOrHadDerivedInstantiation ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
 - The object of the rico:isOrWasComponentOf property on a rico:Instantiation must be a rico:Instantiation""" ;
             sh:path rico:isOrWasComponentOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RepresentationType ;
-            sh:message """
-- The object of the rico:hasRepresentationType property on a rico:Instantiation must be a rico:RepresentationType""" ;
-            sh:path rico:hasRepresentationType ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:isDirectComponentOf property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:isDirectComponentOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:migratedFrom property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:migratedFrom ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:isOrWasDerivedFromInstantiation property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:isOrWasDerivedFromInstantiation ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:migratedInto property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:migratedInto ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:isComponentOfTransitive property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:isComponentOfTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:hasOrHadComponent property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:hasOrHadComponent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:isFunctionallyEquivalentTo property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:isFunctionallyEquivalentTo ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:hasComponentTransitive property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:hasComponentTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:hadComponent property on a rico:Instantiation must be a rico:Instantiation""" ;
-            sh:path rico:hadComponent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:CarrierType ;
-            sh:message """
-- The object of the rico:hasCarrierType property on a rico:Instantiation must be a rico:CarrierType""" ;
-            sh:path rico:hasCarrierType ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isOrWasAnalogueInstantiationOf property on a rico:Instantiation must be a rico:RecordResource""" ;
-            sh:path rico:isOrWasAnalogueInstantiationOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isOrWasInstantiationOf property on a rico:Instantiation must be a rico:RecordResource""" ;
-            sh:path rico:isOrWasInstantiationOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1747,6 +1636,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:hasProductionTechniqueType property on a rico:Instantiation must be a rico:ProductionTechniqueType""" ;
             sh:path rico:hasProductionTechniqueType ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:hasOrHadComponent property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:hasOrHadComponent ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1761,8 +1658,56 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Instantiation ;
             sh:message """
+- The object of the rico:isFunctionallyEquivalentTo property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:isFunctionallyEquivalentTo ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:isOrWasAnalogueInstantiationOf property on a rico:Instantiation must be a rico:RecordResource""" ;
+            sh:path rico:isOrWasAnalogueInstantiationOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:wasComponentOf property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:wasComponentOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:CarrierType ;
+            sh:message """
+- The object of the rico:hasCarrierType property on a rico:Instantiation must be a rico:CarrierType""" ;
+            sh:path rico:hasCarrierType ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
 - The object of the rico:isInstantiationAssociatedWithInstantiation property on a rico:Instantiation must be a rico:Instantiation""" ;
             sh:path rico:isInstantiationAssociatedWithInstantiation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RepresentationType ;
+            sh:message """
+- The object of the rico:hasRepresentationType property on a rico:Instantiation must be a rico:RepresentationType""" ;
+            sh:path rico:hasRepresentationType ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:migratedFrom property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:migratedFrom ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -1771,6 +1716,70 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:hasDirectComponent property on a rico:Instantiation must be a rico:Instantiation""" ;
             sh:path rico:hasDirectComponent ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:isComponentOfTransitive property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:isComponentOfTransitive ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:migratedInto property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:migratedInto ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:hasOrHadDerivedInstantiation property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:hasOrHadDerivedInstantiation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:isOrWasDerivedFromInstantiation property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:isOrWasDerivedFromInstantiation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:hadComponent property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:hadComponent ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:isOrWasInstantiationOf property on a rico:Instantiation must be a rico:RecordResource""" ;
+            sh:path rico:isOrWasInstantiationOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:hasComponentTransitive property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:hasComponentTransitive ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:isDirectComponentOf property on a rico:Instantiation must be a rico:Instantiation""" ;
+            sh:path rico:isDirectComponentOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Instantiation ;
@@ -1782,6 +1791,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:InstantiationToInstantiationRelation ;
+            sh:message """
+- The object of the rico:instantiationToInstantiationRelation_role property on a rico:InstantiationToInstantiationRelation must be a rico:InstantiationToInstantiationRelation""" ;
+            sh:path rico:instantiationToInstantiationRelation_role ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Instantiation ;
             sh:message """
 - A rico:InstantiationToInstantiationRelation must have at least 2 rico:relationConnects statements
@@ -1789,14 +1806,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "2"^^xsd:nonNegativeInteger ;
             sh:path rico:relationConnects ;
             sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:InstantiationToInstantiationRelation ;
-            sh:message """
-- The object of the rico:instantiationToInstantiationRelation_role property on a rico:InstantiationToInstantiationRelation must be a rico:InstantiationToInstantiationRelation""" ;
-            sh:path rico:instantiationToInstantiationRelation_role ;
-            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:InstantiationToInstantiationRelation ;
 .
@@ -1805,14 +1814,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     a sh:NodeShape ;
     rdfs:isDefinedBy : ;
     sh:property 
-        [
-            a sh:PropertyShape ;
-            sh:class rico:IntellectualPropertyRightsRelation ;
-            sh:message """
-- The object of the rico:intellectualPropertyRightsRelation_role property on a rico:IntellectualPropertyRightsRelation must be a rico:IntellectualPropertyRightsRelation""" ;
-            sh:path rico:intellectualPropertyRightsRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
         [
             a sh:PropertyShape ;
             sh:message """
@@ -1835,6 +1836,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             ) ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:IntellectualPropertyRightsRelation ;
+            sh:message """
+- The object of the rico:intellectualPropertyRightsRelation_role property on a rico:IntellectualPropertyRightsRelation must be a rico:IntellectualPropertyRightsRelation""" ;
+            sh:path rico:intellectualPropertyRightsRelation_role ;
+            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -1864,6 +1873,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:KnowingOfRelation ;
+            sh:message """
+- The object of the rico:knowingOfRelation_role property on a rico:KnowingOfRelation must be a rico:KnowingOfRelation""" ;
+            sh:path rico:knowingOfRelation_role ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
 - A rico:KnowingOfRelation must have at least 1 rico:relationHasSource statements
@@ -1881,14 +1898,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:KnowingOfRelation ;
-            sh:message """
-- The object of the rico:knowingOfRelation_role property on a rico:KnowingOfRelation must be a rico:KnowingOfRelation""" ;
-            sh:path rico:knowingOfRelation_role ;
-            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:KnowingOfRelation ;
 .
@@ -1947,11 +1956,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:LeadershipRelation ;
+            sh:class rico:Person ;
             sh:message """
-- The object of the rico:leadershipRelation_role property on a rico:LeadershipRelation must be a rico:LeadershipRelation""" ;
-            sh:path rico:leadershipRelation_role ;
-            sh:severity sh:Warning ;
+- A rico:LeadershipRelation must have at least 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:LeadershipRelation must be a rico:Person""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -1965,16 +1976,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- A rico:LeadershipRelation must have at least 1 rico:relationHasSource statements
-- The object of the rico:relationHasSource property on a rico:LeadershipRelation must be a rico:Person""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Group ;
             sh:message """
 - A rico:LeadershipRelation must have at least 1 rico:relationHasTarget statements
@@ -1982,6 +1983,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:LeadershipRelation ;
+            sh:message """
+- The object of the rico:leadershipRelation_role property on a rico:LeadershipRelation must be a rico:LeadershipRelation""" ;
+            sh:path rico:leadershipRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:LeadershipRelation ;
 .
@@ -1994,16 +2003,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
-- The object of the rico:isOrWasLegalStatusOfSomeMembersOf property on a rico:LegalStatus must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasLegalStatusOfSomeMembersOf ;
+- The object of the rico:isOrWasLegalStatusOfAllMembersOf property on a rico:LegalStatus must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasLegalStatusOfAllMembersOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
-- The object of the rico:isOrWasLegalStatusOfAllMembersOf property on a rico:LegalStatus must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasLegalStatusOfAllMembersOf ;
+- The object of the rico:isOrWasLegalStatusOfSomeMembersOf property on a rico:LegalStatus must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasLegalStatusOfSomeMembersOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:LegalStatus ;
@@ -2013,6 +2022,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     a sh:NodeShape ;
     rdfs:isDefinedBy : ;
     sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class rico:ManagementRelation ;
+            sh:message """
+- The object of the rico:managementRelation_role property on a rico:ManagementRelation must be a rico:ManagementRelation""" ;
+            sh:path rico:managementRelation_role ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- A rico:ManagementRelation must have at least 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:ManagementRelation must be a rico:Agent""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
+        ] ,
         [
             a sh:PropertyShape ;
             sh:message """
@@ -2031,24 +2058,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             ) ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- A rico:ManagementRelation must have at least 1 rico:relationHasSource statements
-- The object of the rico:relationHasSource property on a rico:ManagementRelation must be a rico:Agent""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:ManagementRelation ;
-            sh:message """
-- The object of the rico:managementRelation_role property on a rico:ManagementRelation must be a rico:ManagementRelation""" ;
-            sh:path rico:managementRelation_role ;
-            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:ManagementRelation ;
 .
@@ -2059,14 +2068,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:MandateRelation ;
-            sh:message """
-- The object of the rico:mandateRelation_role property on a rico:MandateRelation must be a rico:MandateRelation""" ;
-            sh:path rico:mandateRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Mandate ;
             sh:message """
 - A rico:MandateRelation must have at least 1 rico:relationHasSource statements
@@ -2074,6 +2075,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:MandateRelation ;
+            sh:message """
+- The object of the rico:mandateRelation_role property on a rico:MandateRelation must be a rico:MandateRelation""" ;
+            sh:path rico:mandateRelation_role ;
+            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -2112,18 +2121,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:MandateType ;
-            sh:message """
-- The object of the rico:hasOrHadMandateType property on a rico:Mandate must be a rico:MandateType""" ;
-            sh:path rico:hasOrHadMandateType ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
 - The object of the rico:authorizes property on a rico:Mandate must be a rico:Agent""" ;
             sh:path rico:authorizes ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:MandateType ;
+            sh:message """
+- The object of the rico:hasOrHadMandateType property on a rico:Mandate must be a rico:MandateType""" ;
+            sh:path rico:hasOrHadMandateType ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Mandate ;
@@ -2175,8 +2184,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         [
             a sh:PropertyShape ;
             sh:class rico:Group ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
+- A rico:MembershipRelation must be the target of exactly 1 rico:relationHasSource statements
 - The object of the rico:relationHasSource property on a rico:MembershipRelation must be a rico:Group""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
         ] ,
@@ -2200,18 +2212,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         [
             a sh:PropertyShape ;
             sh:class rico:Instantiation ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
-- A rico:MigrationRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:MigrationRelation must be a rico:Instantiation""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
+- A rico:MigrationRelation must be the target of exactly 1 rico:relationHasSource statements
 - The object of the rico:relationHasSource property on a rico:MigrationRelation must be a rico:Instantiation""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
         ] ,
@@ -2222,6 +2227,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 - The object of the rico:migrationRelation_role property on a rico:MigrationRelation must be a rico:MigrationRelation""" ;
             sh:path rico:migrationRelation_role ;
             sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- A rico:MigrationRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:MigrationRelation must be a rico:Instantiation""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:MigrationRelation ;
 .
@@ -2263,25 +2278,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         [
             a sh:PropertyShape ;
             sh:message """
-- A rico:OrganicOrFunctionalProvenanceRelation must have at least 1 rico:relationHasSource statements
-- The object of the rico:relationHasSource property on a rico:OrganicOrFunctionalProvenanceRelation must be one of ['rico:Instantiation', 'rico:RecordResource']""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:or (
-                
-                [
-                    sh:class rico:Instantiation ;
-                ]
-                
-                [
-                    sh:class rico:RecordResource ;
-                ]
-            ) ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:message """
 - A rico:OrganicOrFunctionalProvenanceRelation must have at least 1 rico:relationHasTarget statements
 - The object of the rico:relationHasTarget property on a rico:OrganicOrFunctionalProvenanceRelation must be one of ['rico:Activity', 'rico:Agent']""" ;
             sh:minCount "1"^^xsd:nonNegativeInteger ;
@@ -2296,6 +2292,25 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
                 ]
             ) ;
             sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:message """
+- A rico:OrganicOrFunctionalProvenanceRelation must have at least 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:OrganicOrFunctionalProvenanceRelation must be one of ['rico:Instantiation', 'rico:RecordResource']""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:or (
+                
+                [
+                    sh:class rico:Instantiation ;
+                ]
+                
+                [
+                    sh:class rico:RecordResource ;
+                ]
+            ) ;
+            sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
         ] ,
         [
@@ -2359,24 +2374,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:OwnershipRelation ;
-            sh:message """
-- The object of the rico:ownershipRelation_role property on a rico:OwnershipRelation must be a rico:OwnershipRelation""" ;
-            sh:path rico:ownershipRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- A rico:OwnershipRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:OwnershipRelation must be a rico:Thing""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:message """
 - A rico:OwnershipRelation must have at least 1 rico:relationHasSource statements
 - The object of the rico:relationHasSource property on a rico:OwnershipRelation must be one of ['rico:Group', 'rico:Person', 'rico:Position']""" ;
@@ -2397,6 +2394,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             ) ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:OwnershipRelation ;
+            sh:message """
+- The object of the rico:ownershipRelation_role property on a rico:OwnershipRelation must be a rico:OwnershipRelation""" ;
+            sh:path rico:ownershipRelation_role ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- A rico:OwnershipRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:OwnershipRelation must be a rico:Thing""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:OwnershipRelation ;
 .
@@ -2407,11 +2422,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:PerformanceRelation ;
+            sh:class rico:Agent ;
             sh:message """
-- The object of the rico:performanceRelation_role property on a rico:PerformanceRelation must be a rico:PerformanceRelation""" ;
-            sh:path rico:performanceRelation_role ;
-            sh:severity sh:Warning ;
+- A rico:PerformanceRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:PerformanceRelation must be a rico:Agent""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -2425,13 +2442,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Agent ;
+            sh:class rico:PerformanceRelation ;
             sh:message """
-- A rico:PerformanceRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:PerformanceRelation must be a rico:Agent""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
+- The object of the rico:performanceRelation_role property on a rico:PerformanceRelation must be a rico:PerformanceRelation""" ;
+            sh:path rico:performanceRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:PerformanceRelation ;
 .
@@ -2440,6 +2455,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     a sh:NodeShape ;
     rdfs:isDefinedBy : ;
     sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Position ;
+            sh:message """
+- The object of the rico:occupiesOrOccupied property on a rico:Person must be a rico:Position""" ;
+            sh:path rico:occupiesOrOccupied ;
+            sh:severity sh:Warning ;
+        ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:Group ;
@@ -2452,16 +2475,56 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
-- The object of the rico:hasAncestor property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:hasAncestor ;
+- The object of the rico:isChildOf property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:isChildOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
-- The object of the rico:hasOrHadSpouse property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:hasOrHadSpouse ;
+- The object of the rico:hasDescendant property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:hasDescendant ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Person ;
+            sh:message """
+- The object of the rico:hasOrHadCorrespondent property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:hasOrHadCorrespondent ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Group ;
+            sh:message """
+- The object of the rico:isOrWasMemberOf property on a rico:Person must be a rico:Group""" ;
+            sh:path rico:isOrWasMemberOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Person ;
+            sh:message """
+- The object of the rico:hasFamilyAssociationWith property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:hasFamilyAssociationWith ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Person ;
+            sh:message """
+- The object of the rico:knownBy property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:knownBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:hasBirthPlace property on a rico:Person must be a rico:Place""" ;
+            sh:path rico:hasBirthPlace ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2476,8 +2539,32 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
-- The object of the rico:hasDescendant property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:hasDescendant ;
+- The object of the rico:hasAncestor property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:hasAncestor ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasBirthDate property on a rico:Person must be a rico:Date""" ;
+            sh:path rico:hasBirthDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasDeathDate property on a rico:Person must be a rico:Date""" ;
+            sh:path rico:hasDeathDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Person ;
+            sh:message """
+- The object of the rico:hasChild property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:hasChild ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2498,26 +2585,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasBirthDate property on a rico:Person must be a rico:Date""" ;
-            sh:path rico:hasBirthDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
-- The object of the rico:hasFamilyAssociationWith property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:hasFamilyAssociationWith ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:hasSibling property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:hasSibling ;
+- The object of the rico:knowsOf property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:knowsOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2532,64 +2603,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
-- The object of the rico:hasChild property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:hasChild ;
+- The object of the rico:hasOrHadSpouse property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:hasOrHadSpouse ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
-- The object of the rico:knowsOf property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:knowsOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:isChildOf property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:isChildOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:hasBirthPlace property on a rico:Person must be a rico:Place""" ;
-            sh:path rico:hasBirthPlace ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:hasOrHadCorrespondent property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:hasOrHadCorrespondent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Position ;
-            sh:message """
-- The object of the rico:occupiesOrOccupied property on a rico:Person must be a rico:Position""" ;
-            sh:path rico:occupiesOrOccupied ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasDeathDate property on a rico:Person must be a rico:Date""" ;
-            sh:path rico:hasDeathDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:knownBy property on a rico:Person must be a rico:Person""" ;
-            sh:path rico:knownBy ;
+- The object of the rico:hasSibling property on a rico:Person must be a rico:Person""" ;
+            sh:path rico:hasSibling ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2598,14 +2621,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:hasOrHadOccupationOfType property on a rico:Person must be a rico:OccupationType""" ;
             sh:path rico:hasOrHadOccupationOfType ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Group ;
-            sh:message """
-- The object of the rico:isOrWasMemberOf property on a rico:Person must be a rico:Group""" ;
-            sh:path rico:isOrWasMemberOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Person ;
@@ -2617,18 +2632,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Coordinates ;
-            sh:message """
-- The object of the rico:hasOrHadCoordinates property on a rico:PhysicalLocation must be a rico:Coordinates""" ;
-            sh:path rico:hasOrHadCoordinates ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Place ;
             sh:message """
 - The object of the rico:isOrWasPhysicalLocationOf property on a rico:PhysicalLocation must be a rico:Place""" ;
             sh:path rico:isOrWasPhysicalLocationOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Coordinates ;
+            sh:message """
+- The object of the rico:hasOrHadCoordinates property on a rico:PhysicalLocation must be a rico:Coordinates""" ;
+            sh:path rico:hasOrHadCoordinates ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:PhysicalLocation ;
@@ -2655,17 +2670,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:PlaceRelation ;
-            sh:message """
-- The object of the rico:placeRelation_role property on a rico:PlaceRelation must be a rico:PlaceRelation""" ;
-            sh:path rico:placeRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Place ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
+- A rico:PlaceRelation must be the target of exactly 1 rico:relationHasSource statements
 - The object of the rico:relationHasSource property on a rico:PlaceRelation must be a rico:Place""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
         ] ,
@@ -2678,6 +2688,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:PlaceRelation ;
+            sh:message """
+- The object of the rico:placeRelation_role property on a rico:PlaceRelation must be a rico:PlaceRelation""" ;
+            sh:path rico:placeRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:PlaceRelation ;
 .
@@ -2688,90 +2706,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:PlaceType ;
-            sh:message """
-- The object of the rico:hasOrHadPlaceType property on a rico:Place must be a rico:PlaceType""" ;
-            sh:path rico:hasOrHadPlaceType ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:isOrWasLocationOfAgent property on a rico:Place must be a rico:Agent""" ;
-            sh:path rico:isOrWasLocationOfAgent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Place ;
             sh:message """
-- The object of the rico:containsTransitive property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:containsTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isPlaceAssociatedWith property on a rico:Place must be a rico:Thing""" ;
-            sh:path rico:isPlaceAssociatedWith ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:isPlaceAssociatedWithAgent property on a rico:Place must be a rico:Agent""" ;
-            sh:path rico:isPlaceAssociatedWithAgent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:isBirthPlaceOf property on a rico:Place must be a rico:Person""" ;
-            sh:path rico:isBirthPlaceOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Person ;
-            sh:message """
-- The object of the rico:isDeathPlaceOf property on a rico:Place must be a rico:Person""" ;
-            sh:path rico:isDeathPlaceOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:containsOrContained property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:containsOrContained ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isOrWasLocationOf property on a rico:Place must be a rico:Thing""" ;
-            sh:path rico:isOrWasLocationOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:isContainedByTransitive property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:isContainedByTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:isOrWasAdjacentTo property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:isOrWasAdjacentTo ;
+- The object of the rico:directlyContains property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:directlyContains ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2784,18 +2722,34 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Place ;
+            sh:class rico:Agent ;
             sh:message """
-- The object of the rico:wasContainedBy property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:wasContainedBy ;
+- The object of the rico:isOrWasLocationOfAgent property on a rico:Place must be a rico:Agent""" ;
+            sh:path rico:isOrWasLocationOfAgent ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isPlaceAssociatedWith property on a rico:Place must be a rico:Thing""" ;
+            sh:path rico:isPlaceAssociatedWith ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Person ;
+            sh:message """
+- The object of the rico:isBirthPlaceOf property on a rico:Place must be a rico:Person""" ;
+            sh:path rico:isBirthPlaceOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:Place ;
             sh:message """
-- The object of the rico:isOrWasContainedBy property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:isOrWasContainedBy ;
+- The object of the rico:isContainedByTransitive property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:isContainedByTransitive ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2808,10 +2762,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
+            sh:class rico:PhysicalLocation ;
+            sh:message """
+- The object of the rico:hasOrHadPhysicalLocation property on a rico:Place must be a rico:PhysicalLocation""" ;
+            sh:path rico:hasOrHadPhysicalLocation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Place ;
             sh:message """
-- The object of the rico:overlapsOrOverlapped property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:overlapsOrOverlapped ;
+- The object of the rico:containsTransitive property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:containsTransitive ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2826,8 +2788,40 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Place ;
             sh:message """
-- The object of the rico:directlyContains property on a rico:Place must be a rico:Place""" ;
-            sh:path rico:directlyContains ;
+- The object of the rico:isOrWasAdjacentTo property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:isOrWasAdjacentTo ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Person ;
+            sh:message """
+- The object of the rico:isDeathPlaceOf property on a rico:Place must be a rico:Person""" ;
+            sh:path rico:isDeathPlaceOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isOrWasLocationOf property on a rico:Place must be a rico:Thing""" ;
+            sh:path rico:isOrWasLocationOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:wasContainedBy property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:wasContainedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:isPlaceAssociatedWithAgent property on a rico:Place must be a rico:Agent""" ;
+            sh:path rico:isPlaceAssociatedWithAgent ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2840,10 +2834,34 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:PhysicalLocation ;
+            sh:class rico:PlaceType ;
             sh:message """
-- The object of the rico:hasOrHadPhysicalLocation property on a rico:Place must be a rico:PhysicalLocation""" ;
-            sh:path rico:hasOrHadPhysicalLocation ;
+- The object of the rico:hasOrHadPlaceType property on a rico:Place must be a rico:PlaceType""" ;
+            sh:path rico:hasOrHadPlaceType ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:isOrWasContainedBy property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:isOrWasContainedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:containsOrContained property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:containsOrContained ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:overlapsOrOverlapped property on a rico:Place must be a rico:Place""" ;
+            sh:path rico:overlapsOrOverlapped ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Place ;
@@ -2905,10 +2923,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:MembershipRelation ;
+            sh:class rico:LeadershipRelation ;
             sh:message """
-- The object of the rico:positionIsContextOfMembershipRelation property on a rico:Position must be a rico:MembershipRelation""" ;
-            sh:path rico:positionIsContextOfMembershipRelation ;
+- The object of the rico:positionIsContextOfLeadershipRelation property on a rico:Position must be a rico:LeadershipRelation""" ;
+            sh:path rico:positionIsContextOfLeadershipRelation ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2921,10 +2939,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:LeadershipRelation ;
+            sh:class rico:MembershipRelation ;
             sh:message """
-- The object of the rico:positionIsContextOfLeadershipRelation property on a rico:Position must be a rico:LeadershipRelation""" ;
-            sh:path rico:positionIsContextOfLeadershipRelation ;
+- The object of the rico:positionIsContextOfMembershipRelation property on a rico:Position must be a rico:MembershipRelation""" ;
+            sh:path rico:positionIsContextOfMembershipRelation ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -2944,19 +2962,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Position ;
-            sh:message """
-- A rico:PositionToGroupRelation must have at least 1 rico:relationHasSource statements
-- The object of the rico:relationHasSource property on a rico:PositionToGroupRelation must be a rico:Position""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Group ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
+- A rico:PositionToGroupRelation must be the target of exactly 1 rico:relationHasTarget statements
 - The object of the rico:relationHasTarget property on a rico:PositionToGroupRelation must be a rico:Group""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
         ] ,
@@ -2967,6 +2978,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 - The object of the rico:positionToGroupRelation_role property on a rico:PositionToGroupRelation must be a rico:PositionToGroupRelation""" ;
             sh:path rico:positionToGroupRelation_role ;
             sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Position ;
+            sh:message """
+- A rico:PositionToGroupRelation must have at least 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:PositionToGroupRelation must be a rico:Position""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:PositionToGroupRelation ;
 .
@@ -2992,18 +3013,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordSet ;
+            sh:class rico:RecordResource ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
-- The object of the rico:proxyIn property on a rico:Proxy must be a rico:RecordSet""" ;
-            sh:path rico:proxyIn ;
+- A rico:Proxy must be the target of exactly 1 rico:proxyFor statements
+- The object of the rico:proxyFor property on a rico:Proxy must be a rico:RecordResource""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:proxyFor ;
             sh:severity sh:Violation ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
+            sh:class rico:RecordSet ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
-- The object of the rico:proxyFor property on a rico:Proxy must be a rico:RecordResource""" ;
-            sh:path rico:proxyFor ;
+- A rico:Proxy must be the target of exactly 1 rico:proxyIn statements
+- The object of the rico:proxyIn property on a rico:Proxy must be a rico:RecordSet""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:proxyIn ;
             sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:Proxy ;
@@ -3027,14 +3054,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResourceGeneticRelation ;
-            sh:message """
-- The object of the rico:recordResourceGeneticRelation_role property on a rico:RecordResourceGeneticRelation must be a rico:RecordResourceGeneticRelation""" ;
-            sh:path rico:recordResourceGeneticRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:RecordResource ;
             sh:message """
 - A rico:RecordResourceGeneticRelation must have at least 2 rico:relationConnects statements
@@ -3042,6 +3061,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "2"^^xsd:nonNegativeInteger ;
             sh:path rico:relationConnects ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResourceGeneticRelation ;
+            sh:message """
+- The object of the rico:recordResourceGeneticRelation_role property on a rico:RecordResourceGeneticRelation must be a rico:RecordResourceGeneticRelation""" ;
+            sh:path rico:recordResourceGeneticRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:RecordResourceGeneticRelation ;
 .
@@ -3096,10 +3123,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Thing ;
+            sh:class rico:RecordResource ;
             sh:message """
-- The object of the rico:describesOrDescribed property on a rico:RecordResource must be a rico:Thing""" ;
-            sh:path rico:describesOrDescribed ;
+- The object of the rico:hasCopy property on a rico:RecordResource must be a rico:RecordResource""" ;
+            sh:path rico:hasCopy ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3112,38 +3139,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:hasOrHadDigitalInstantiation property on a rico:RecordResource must be a rico:Instantiation""" ;
-            sh:path rico:hasOrHadDigitalInstantiation ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isCopyOf property on a rico:RecordResource must be a rico:RecordResource""" ;
-            sh:path rico:isCopyOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Relation ;
-            sh:message """
-- The object of the rico:evidences property on a rico:RecordResource must be a rico:Relation""" ;
-            sh:path rico:evidences ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasPublicationDate property on a rico:RecordResource must be a rico:Date""" ;
-            sh:path rico:hasPublicationDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:RecordResource ;
             sh:message """
 - The object of the rico:isReplyTo property on a rico:RecordResource must be a rico:RecordResource""" ;
@@ -3152,18 +3147,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
+            sh:class rico:Agent ;
             sh:message """
-- The object of the rico:hasReply property on a rico:RecordResource must be a rico:RecordResource""" ;
-            sh:path rico:hasReply ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Instantiation ;
-            sh:message """
-- The object of the rico:hasOrHadInstantiation property on a rico:RecordResource must be a rico:Instantiation""" ;
-            sh:path rico:hasOrHadInstantiation ;
+- The object of the rico:hasPublisher property on a rico:RecordResource must be a rico:Agent""" ;
+            sh:path rico:hasPublisher ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3176,10 +3163,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
+            sh:class rico:Date ;
             sh:message """
-- The object of the rico:hasCopy property on a rico:RecordResource must be a rico:RecordResource""" ;
-            sh:path rico:hasCopy ;
+- The object of the rico:hasPublicationDate property on a rico:RecordResource must be a rico:Date""" ;
+            sh:path rico:hasPublicationDate ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3192,10 +3179,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
+            sh:class rico:Relation ;
             sh:message """
-- The object of the rico:isRecordResourceAssociatedWithRecordResource property on a rico:RecordResource must be a rico:RecordResource""" ;
-            sh:path rico:isRecordResourceAssociatedWithRecordResource ;
+- The object of the rico:evidences property on a rico:RecordResource must be a rico:Relation""" ;
+            sh:path rico:evidences ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:hasOrHadDigitalInstantiation property on a rico:RecordResource must be a rico:Instantiation""" ;
+            sh:path rico:hasOrHadDigitalInstantiation ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3216,10 +3211,42 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Agent ;
+            sh:class rico:RecordResource ;
             sh:message """
-- The object of the rico:hasPublisher property on a rico:RecordResource must be a rico:Agent""" ;
-            sh:path rico:hasPublisher ;
+- The object of the rico:isRecordResourceAssociatedWithRecordResource property on a rico:RecordResource must be a rico:RecordResource""" ;
+            sh:path rico:isRecordResourceAssociatedWithRecordResource ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Instantiation ;
+            sh:message """
+- The object of the rico:hasOrHadInstantiation property on a rico:RecordResource must be a rico:Instantiation""" ;
+            sh:path rico:hasOrHadInstantiation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:describesOrDescribed property on a rico:RecordResource must be a rico:Thing""" ;
+            sh:path rico:describesOrDescribed ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:isCopyOf property on a rico:RecordResource must be a rico:RecordResource""" ;
+            sh:path rico:isCopyOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:hasReply property on a rico:RecordResource must be a rico:RecordResource""" ;
+            sh:path rico:hasReply ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:RecordResource ;
@@ -3231,20 +3258,23 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A rico:RecordResourceToInstantiationRelation must be the target of exactly 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:RecordResourceToInstantiationRelation must be a rico:RecordResource""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Instantiation ;
             sh:message """
 - A rico:RecordResourceToInstantiationRelation must have at least 1 rico:relationHasTarget statements
 - The object of the rico:relationHasTarget property on a rico:RecordResourceToInstantiationRelation must be a rico:Instantiation""" ;
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:relationHasSource property on a rico:RecordResourceToInstantiationRelation must be a rico:RecordResource""" ;
-            sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
         ] ,
         [
@@ -3264,14 +3294,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResourceToRecordResourceRelation ;
-            sh:message """
-- The object of the rico:recordResourceToRecordResourceRelation_role property on a rico:RecordResourceToRecordResourceRelation must be a rico:RecordResourceToRecordResourceRelation""" ;
-            sh:path rico:recordResourceToRecordResourceRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:RecordResource ;
             sh:message """
 - A rico:RecordResourceToRecordResourceRelation must have at least 2 rico:relationConnects statements
@@ -3279,6 +3301,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "2"^^xsd:nonNegativeInteger ;
             sh:path rico:relationConnects ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResourceToRecordResourceRelation ;
+            sh:message """
+- The object of the rico:recordResourceToRecordResourceRelation_role property on a rico:RecordResourceToRecordResourceRelation must be a rico:RecordResourceToRecordResourceRelation""" ;
+            sh:path rico:recordResourceToRecordResourceRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:RecordResourceToRecordResourceRelation ;
 .
@@ -3289,14 +3319,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Type ;
-            sh:message """
-- The object of the rico:hasOrHadSomeMembersWithCategory property on a rico:RecordSet must be a rico:Type""" ;
-            sh:path rico:hasOrHadSomeMembersWithCategory ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:DocumentaryFormType ;
             sh:message """
 - The object of the rico:hasOrHadSomeMembersWithDocumentaryFormType property on a rico:RecordSet must be a rico:DocumentaryFormType""" ;
@@ -3305,34 +3327,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:LegalStatus ;
+            sh:class rico:RecordState ;
             sh:message """
-- The object of the rico:hasOrHadSomeMembersWithLegalStatus property on a rico:RecordSet must be a rico:LegalStatus""" ;
-            sh:path rico:hasOrHadSomeMembersWithLegalStatus ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Language ;
-            sh:message """
-- The object of the rico:hasOrHadAllMembersWithLanguage property on a rico:RecordSet must be a rico:Language""" ;
-            sh:path rico:hasOrHadAllMembersWithLanguage ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasOrHadAllMembersWithCreationDate property on a rico:RecordSet must be a rico:Date""" ;
-            sh:path rico:hasOrHadAllMembersWithCreationDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:LegalStatus ;
-            sh:message """
-- The object of the rico:hasOrHadAllMembersWithLegalStatus property on a rico:RecordSet must be a rico:LegalStatus""" ;
-            sh:path rico:hasOrHadAllMembersWithLegalStatus ;
+- The object of the rico:hasOrHadAllMembersWithRecordState property on a rico:RecordSet must be a rico:RecordState""" ;
+            sh:path rico:hasOrHadAllMembersWithRecordState ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3345,10 +3343,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordSetType ;
+            sh:class rico:Type ;
             sh:message """
-- The object of the rico:hasRecordSetType property on a rico:RecordSet must be a rico:RecordSetType""" ;
-            sh:path rico:hasRecordSetType ;
+- The object of the rico:hasOrHadAllMembersWithCategory property on a rico:RecordSet must be a rico:Type""" ;
+            sh:path rico:hasOrHadAllMembersWithCategory ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3361,18 +3359,42 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:DocumentaryFormType ;
-            sh:message """
-- The object of the rico:hasOrHadAllMembersWithDocumentaryFormType property on a rico:RecordSet must be a rico:DocumentaryFormType""" ;
-            sh:path rico:hasOrHadAllMembersWithDocumentaryFormType ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:ContentType ;
             sh:message """
 - The object of the rico:hasOrHadAllMembersWithContentType property on a rico:RecordSet must be a rico:ContentType""" ;
             sh:path rico:hasOrHadAllMembersWithContentType ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasOrHadAllMembersWithCreationDate property on a rico:RecordSet must be a rico:Date""" ;
+            sh:path rico:hasOrHadAllMembersWithCreationDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordSetType ;
+            sh:message """
+- The object of the rico:hasRecordSetType property on a rico:RecordSet must be a rico:RecordSetType""" ;
+            sh:path rico:hasRecordSetType ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Type ;
+            sh:message """
+- The object of the rico:hasOrHadSomeMembersWithCategory property on a rico:RecordSet must be a rico:Type""" ;
+            sh:path rico:hasOrHadSomeMembersWithCategory ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:LegalStatus ;
+            sh:message """
+- The object of the rico:hasOrHadSomeMembersWithLegalStatus property on a rico:RecordSet must be a rico:LegalStatus""" ;
+            sh:path rico:hasOrHadSomeMembersWithLegalStatus ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3385,10 +3407,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordState ;
+            sh:class rico:Language ;
             sh:message """
-- The object of the rico:hasOrHadAllMembersWithRecordState property on a rico:RecordSet must be a rico:RecordState""" ;
-            sh:path rico:hasOrHadAllMembersWithRecordState ;
+- The object of the rico:hasOrHadSomeMembersWithLanguage property on a rico:RecordSet must be a rico:Language""" ;
+            sh:path rico:hasOrHadSomeMembersWithLanguage ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:DocumentaryFormType ;
+            sh:message """
+- The object of the rico:hasOrHadAllMembersWithDocumentaryFormType property on a rico:RecordSet must be a rico:DocumentaryFormType""" ;
+            sh:path rico:hasOrHadAllMembersWithDocumentaryFormType ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3403,16 +3433,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Language ;
             sh:message """
-- The object of the rico:hasOrHadSomeMembersWithLanguage property on a rico:RecordSet must be a rico:Language""" ;
-            sh:path rico:hasOrHadSomeMembersWithLanguage ;
+- The object of the rico:hasOrHadAllMembersWithLanguage property on a rico:RecordSet must be a rico:Language""" ;
+            sh:path rico:hasOrHadAllMembersWithLanguage ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Type ;
+            sh:class rico:LegalStatus ;
             sh:message """
-- The object of the rico:hasOrHadAllMembersWithCategory property on a rico:RecordSet must be a rico:Type""" ;
-            sh:path rico:hasOrHadAllMembersWithCategory ;
+- The object of the rico:hasOrHadAllMembersWithLegalStatus property on a rico:RecordSet must be a rico:LegalStatus""" ;
+            sh:path rico:hasOrHadAllMembersWithLegalStatus ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:RecordSet ;
@@ -3447,16 +3477,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
-- The object of the rico:isOrWasRecordStateOfSomeMembersOf property on a rico:RecordState must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasRecordStateOfSomeMembersOf ;
+- The object of the rico:isOrWasRecordStateOfAllMembersOf property on a rico:RecordState must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasRecordStateOfAllMembersOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
-- The object of the rico:isOrWasRecordStateOfAllMembersOf property on a rico:RecordState must be a rico:RecordSet""" ;
-            sh:path rico:isOrWasRecordStateOfAllMembersOf ;
+- The object of the rico:isOrWasRecordStateOfSomeMembersOf property on a rico:RecordState must be a rico:RecordSet""" ;
+            sh:path rico:isOrWasRecordStateOfSomeMembersOf ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:RecordState ;
@@ -3470,8 +3500,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
+- The object of the rico:relationHasContext property on a rico:Relation must be a rico:Thing""" ;
+            sh:path rico:relationHasContext ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
 - The object of the rico:relationConnects property on a rico:Relation must be a rico:Thing""" ;
             sh:path rico:relationConnects ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:isEvidencedBy property on a rico:Relation must be a rico:RecordResource""" ;
+            sh:path rico:isEvidencedBy ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3486,32 +3532,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:relationHasTarget property on a rico:Relation must be a rico:Thing""" ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:relationHasContext property on a rico:Relation must be a rico:Thing""" ;
-            sh:path rico:relationHasContext ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isEvidencedBy property on a rico:Relation must be a rico:RecordResource""" ;
-            sh:path rico:isEvidencedBy ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
 - The object of the rico:relationHasSource property on a rico:Relation must be a rico:Thing""" ;
             sh:path rico:relationHasSource ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:relationHasTarget property on a rico:Relation must be a rico:Thing""" ;
+            sh:path rico:relationHasTarget ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Relation ;
@@ -3553,11 +3583,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:RuleRelation ;
+            sh:class rico:Rule ;
             sh:message """
-- The object of the rico:ruleRelation_role property on a rico:RuleRelation must be a rico:RuleRelation""" ;
-            sh:path rico:ruleRelation_role ;
-            sh:severity sh:Warning ;
+- A rico:RuleRelation must have at least 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:RuleRelation must be a rico:Rule""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -3571,13 +3603,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Rule ;
+            sh:class rico:RuleRelation ;
             sh:message """
-- A rico:RuleRelation must have at least 1 rico:relationHasSource statements
-- The object of the rico:relationHasSource property on a rico:RuleRelation must be a rico:Rule""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
+- The object of the rico:ruleRelation_role property on a rico:RuleRelation must be a rico:RuleRelation""" ;
+            sh:path rico:ruleRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:RuleRelation ;
 .
@@ -3588,26 +3618,26 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isOrWasExpressedBy property on a rico:Rule must be a rico:RecordResource""" ;
-            sh:path rico:isOrWasExpressedBy ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isRuleAssociatedWith property on a rico:Rule must be a rico:Thing""" ;
-            sh:path rico:isRuleAssociatedWith ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:RuleType ;
             sh:message """
 - The object of the rico:hasOrHadRuleType property on a rico:Rule must be a rico:RuleType""" ;
             sh:path rico:hasOrHadRuleType ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:isOrWasEnforcedBy property on a rico:Rule must be a rico:Agent""" ;
+            sh:path rico:isOrWasEnforcedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:isOrWasExpressedBy property on a rico:Rule must be a rico:RecordResource""" ;
+            sh:path rico:isOrWasExpressedBy ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3628,10 +3658,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Agent ;
+            sh:class rico:Thing ;
             sh:message """
-- The object of the rico:isOrWasEnforcedBy property on a rico:Rule must be a rico:Agent""" ;
-            sh:path rico:isOrWasEnforcedBy ;
+- The object of the rico:isRuleAssociatedWith property on a rico:Rule must be a rico:Thing""" ;
+            sh:path rico:isRuleAssociatedWith ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Rule ;
@@ -3658,14 +3688,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:SequentialRelation ;
-            sh:message """
-- The object of the rico:sequentialRelation_role property on a rico:SequentialRelation must be a rico:SequentialRelation""" ;
-            sh:path rico:sequentialRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
 - A rico:SequentialRelation must have at least 1 rico:relationHasSource statements
@@ -3673,6 +3695,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:SequentialRelation ;
+            sh:message """
+- The object of the rico:sequentialRelation_role property on a rico:SequentialRelation must be a rico:SequentialRelation""" ;
+            sh:path rico:sequentialRelation_role ;
+            sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
@@ -3718,14 +3748,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:SpouseRelation ;
-            sh:message """
-- The object of the rico:spouseRelation_role property on a rico:SpouseRelation must be a rico:SpouseRelation""" ;
-            sh:path rico:spouseRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Person ;
             sh:message """
 - A rico:SpouseRelation must have at least 2 rico:relationConnects statements
@@ -3733,6 +3755,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "2"^^xsd:nonNegativeInteger ;
             sh:path rico:relationConnects ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:SpouseRelation ;
+            sh:message """
+- The object of the rico:spouseRelation_role property on a rico:SpouseRelation must be a rico:SpouseRelation""" ;
+            sh:path rico:spouseRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:SpouseRelation ;
 .
@@ -3778,6 +3808,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
+            sh:class rico:TemporalRelation ;
+            sh:message """
+- The object of the rico:temporalRelation_role property on a rico:TemporalRelation must be a rico:TemporalRelation""" ;
+            sh:path rico:temporalRelation_role ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
 - A rico:TemporalRelation must have at least 1 rico:relationHasSource statements
@@ -3795,14 +3833,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:TemporalRelation ;
-            sh:message """
-- The object of the rico:temporalRelation_role property on a rico:TemporalRelation must be a rico:TemporalRelation""" ;
-            sh:path rico:temporalRelation_role ;
-            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:TemporalRelation ;
 .
@@ -3815,30 +3845,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:hasDirectPart property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:hasDirectPart ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:precedesInSequenceTransitive property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:precedesInSequenceTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Event ;
-            sh:message """
-- The object of the rico:isAssociatedWithEvent property on a rico:Thing must be a rico:Event""" ;
-            sh:path rico:isAssociatedWithEvent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
 - The object of the rico:hasOrHadPart property on a rico:Thing must be a rico:Thing""" ;
             sh:path rico:hasOrHadPart ;
             sh:severity sh:Warning ;
@@ -3847,8 +3853,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:precedesOrPreceded property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:precedesOrPreceded ;
+- The object of the rico:hasDirectPart property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:hasDirectPart ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:followsOrFollowed property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:followsOrFollowed ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3861,10 +3875,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:isAssociatedWithPlace property on a rico:Thing must be a rico:Place""" ;
+            sh:path rico:isAssociatedWithPlace ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:hasPartTransitive property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:hasPartTransitive ;
+- The object of the rico:followsInSequenceTransitive property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:followsInSequenceTransitive ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3877,34 +3899,34 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Date ;
+            sh:class rico:Rule ;
             sh:message """
-- The object of the rico:isAssociatedWithDate property on a rico:Thing must be a rico:Date""" ;
-            sh:path rico:isAssociatedWithDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isOrWasPartOf property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:isOrWasPartOf ;
+- The object of the rico:isAssociatedWithRule property on a rico:Thing must be a rico:Rule""" ;
+            sh:path rico:isAssociatedWithRule ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:class rico:RecordResource ;
             sh:message """
-- The object of the rico:isOrWasMainSubjectOf property on a rico:Thing must be a rico:RecordResource""" ;
-            sh:path rico:isOrWasMainSubjectOf ;
+- The object of the rico:isOrWasSubjectOf property on a rico:Thing must be a rico:RecordResource""" ;
+            sh:path rico:isOrWasSubjectOf ;
             sh:severity sh:Warning ;
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Place ;
+            sh:class rico:Relation ;
             sh:message """
-- The object of the rico:hasOrHadLocation property on a rico:Thing must be a rico:Place""" ;
-            sh:path rico:hasOrHadLocation ;
+- The object of the rico:thingIsContextOfRelation property on a rico:Thing must be a rico:Relation""" ;
+            sh:path rico:thingIsContextOfRelation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasModificationDate property on a rico:Thing must be a rico:Date""" ;
+            sh:path rico:hasModificationDate ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3919,24 +3941,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:precedesInTime property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:precedesInTime ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Event ;
-            sh:message """
-- The object of the rico:isOrWasParticipantIn property on a rico:Thing must be a rico:Event""" ;
-            sh:path rico:isOrWasParticipantIn ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isOrWasSubjectOf property on a rico:Thing must be a rico:RecordResource""" ;
-            sh:path rico:isOrWasSubjectOf ;
+- The object of the rico:wasPartOf property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:wasPartOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -3945,174 +3951,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:message """
 - The object of the rico:resultsOrResultedFrom property on a rico:Thing must be a rico:Event""" ;
             sh:path rico:resultsOrResultedFrom ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasEndDate property on a rico:Thing must be a rico:Date""" ;
-            sh:path rico:hasEndDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasDestructionDate property on a rico:Thing must be a rico:Date""" ;
-            sh:path rico:hasDestructionDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:wasLastUpdatedAtDate property on a rico:Thing must be a rico:Date""" ;
-            sh:path rico:wasLastUpdatedAtDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasModificationDate property on a rico:Thing must be a rico:Date""" ;
-            sh:path rico:hasModificationDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Name ;
-            sh:message """
-- The object of the rico:hasOrHadName property on a rico:Thing must be a rico:Name""" ;
-            sh:path rico:hasOrHadName ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Agent ;
-            sh:message """
-- The object of the rico:isOrWasUnderAuthorityOf property on a rico:Thing must be a rico:Agent""" ;
-            sh:path rico:isOrWasUnderAuthorityOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Rule ;
-            sh:message """
-- The object of the rico:isAssociatedWithRule property on a rico:Thing must be a rico:Rule""" ;
-            sh:path rico:isAssociatedWithRule ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:followsOrFollowed property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:followsOrFollowed ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:followedInSequence property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:followedInSequence ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:RecordResource ;
-            sh:message """
-- The object of the rico:isOrWasDescribedBy property on a rico:Thing must be a rico:RecordResource""" ;
-            sh:path rico:isOrWasDescribedBy ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Date ;
-            sh:message """
-- The object of the rico:hasBeginningDate property on a rico:Thing must be a rico:Date""" ;
-            sh:path rico:hasBeginningDate ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Extent ;
-            sh:message """
-- The object of the rico:hasExtent property on a rico:Thing must be a rico:Extent""" ;
-            sh:path rico:hasExtent ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Appellation ;
-            sh:message """
-- The object of the rico:hasOrHadAppellation property on a rico:Thing must be a rico:Appellation""" ;
-            sh:path rico:hasOrHadAppellation ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:hadPart property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:hadPart ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Place ;
-            sh:message """
-- The object of the rico:isAssociatedWithPlace property on a rico:Thing must be a rico:Place""" ;
-            sh:path rico:isAssociatedWithPlace ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Event ;
-            sh:message """
-- The object of the rico:isOrWasAffectedBy property on a rico:Thing must be a rico:Event""" ;
-            sh:path rico:isOrWasAffectedBy ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isPartOfTransitive property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:isPartOfTransitive ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isEquivalentTo property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:isEquivalentTo ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:directlyFollowsInSequence property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:directlyFollowsInSequence ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:followsInTime property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:followsInTime ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:wasPartOf property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:wasPartOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -4127,8 +3965,64 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
+- The object of the rico:precededInSequence property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:precededInSequence ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:isAssociatedWithDate property on a rico:Thing must be a rico:Date""" ;
+            sh:path rico:isAssociatedWithDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasEndDate property on a rico:Thing must be a rico:Date""" ;
+            sh:path rico:hasEndDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:directlyFollowsInSequence property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:directlyFollowsInSequence ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Name ;
+            sh:message """
+- The object of the rico:hasOrHadName property on a rico:Thing must be a rico:Name""" ;
+            sh:path rico:hasOrHadName ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Event ;
+            sh:message """
+- The object of the rico:isAssociatedWithEvent property on a rico:Thing must be a rico:Event""" ;
+            sh:path rico:isAssociatedWithEvent ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
 - The object of the rico:isRelatedTo property on a rico:Thing must be a rico:Thing""" ;
             sh:path rico:isRelatedTo ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Agent ;
+            sh:message """
+- The object of the rico:isOrWasUnderAuthorityOf property on a rico:Thing must be a rico:Agent""" ;
+            sh:path rico:isOrWasUnderAuthorityOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -4141,10 +4035,50 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Thing ;
+            sh:class rico:RecordResource ;
             sh:message """
-- The object of the rico:followsInSequenceTransitive property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:followsInSequenceTransitive ;
+- The object of the rico:isOrWasMainSubjectOf property on a rico:Thing must be a rico:RecordResource""" ;
+            sh:path rico:isOrWasMainSubjectOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Event ;
+            sh:message """
+- The object of the rico:isOrWasAffectedBy property on a rico:Thing must be a rico:Event""" ;
+            sh:path rico:isOrWasAffectedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Extent ;
+            sh:message """
+- The object of the rico:hasExtent property on a rico:Thing must be a rico:Extent""" ;
+            sh:path rico:hasExtent ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Rule ;
+            sh:message """
+- The object of the rico:isOrWasRegulatedBy property on a rico:Thing must be a rico:Rule""" ;
+            sh:path rico:isOrWasRegulatedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:wasLastUpdatedAtDate property on a rico:Thing must be a rico:Date""" ;
+            sh:path rico:wasLastUpdatedAtDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:RecordResource ;
+            sh:message """
+- The object of the rico:isOrWasDescribedBy property on a rico:Thing must be a rico:RecordResource""" ;
+            sh:path rico:isOrWasDescribedBy ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -4159,16 +4093,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
-- The object of the rico:precededInSequence property on a rico:Thing must be a rico:Thing""" ;
-            sh:path rico:precededInSequence ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Relation ;
-            sh:message """
-- The object of the rico:thingIsContextOfRelation property on a rico:Thing must be a rico:Relation""" ;
-            sh:path rico:thingIsContextOfRelation ;
+- The object of the rico:hadPart property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:hadPart ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -4181,10 +4107,114 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         ] ,
         [
             a sh:PropertyShape ;
-            sh:class rico:Rule ;
+            sh:class rico:Appellation ;
             sh:message """
-- The object of the rico:isOrWasRegulatedBy property on a rico:Thing must be a rico:Rule""" ;
-            sh:path rico:isOrWasRegulatedBy ;
+- The object of the rico:hasOrHadAppellation property on a rico:Thing must be a rico:Appellation""" ;
+            sh:path rico:hasOrHadAppellation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:followedInSequence property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:followedInSequence ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isPartOfTransitive property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:isPartOfTransitive ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Event ;
+            sh:message """
+- The object of the rico:isOrWasParticipantIn property on a rico:Thing must be a rico:Event""" ;
+            sh:path rico:isOrWasParticipantIn ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:hasPartTransitive property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:hasPartTransitive ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isOrWasPartOf property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:isOrWasPartOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:precedesOrPreceded property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:precedesOrPreceded ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:followsInTime property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:followsInTime ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasDestructionDate property on a rico:Thing must be a rico:Date""" ;
+            sh:path rico:hasDestructionDate ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isEquivalentTo property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:isEquivalentTo ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:precedesInSequenceTransitive property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:precedesInSequenceTransitive ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:precedesInTime property on a rico:Thing must be a rico:Thing""" ;
+            sh:path rico:precedesInTime ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Place ;
+            sh:message """
+- The object of the rico:hasOrHadLocation property on a rico:Thing must be a rico:Place""" ;
+            sh:path rico:hasOrHadLocation ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Date ;
+            sh:message """
+- The object of the rico:hasBeginningDate property on a rico:Thing must be a rico:Date""" ;
+            sh:path rico:hasBeginningDate ;
             sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:Thing ;
@@ -4202,19 +4232,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- A rico:TypeRelation must have at least 1 rico:relationHasTarget statements
-- The object of the rico:relationHasTarget property on a rico:TypeRelation must be a rico:Thing""" ;
-            sh:minCount "1"^^xsd:nonNegativeInteger ;
-            sh:path rico:relationHasTarget ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Type ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
             sh:message """
+- A rico:TypeRelation must be the target of exactly 1 rico:relationHasSource statements
 - The object of the rico:relationHasSource property on a rico:TypeRelation must be a rico:Type""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasSource ;
             sh:severity sh:Violation ;
         ] ,
@@ -4225,6 +4248,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 - The object of the rico:typeRelation_role property on a rico:TypeRelation must be a rico:TypeRelation""" ;
             sh:path rico:typeRelation_role ;
             sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- A rico:TypeRelation must have at least 1 rico:relationHasTarget statements
+- The object of the rico:relationHasTarget property on a rico:TypeRelation must be a rico:Thing""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasTarget ;
+            sh:severity sh:Violation ;
         ] ;
     sh:targetClass rico:TypeRelation ;
 .
@@ -4235,18 +4268,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:isOrWasCategoryOf property on a rico:Type must be a rico:Thing""" ;
-            sh:path rico:isOrWasCategoryOf ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:RecordSet ;
             sh:message """
 - The object of the rico:isOrWasCategoryOfAllMembersOf property on a rico:Type must be a rico:RecordSet""" ;
             sh:path rico:isOrWasCategoryOfAllMembersOf ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:message """
+- The object of the rico:isOrWasCategoryOf property on a rico:Type must be a rico:Thing""" ;
+            sh:path rico:isOrWasCategoryOf ;
             sh:severity sh:Warning ;
         ] ,
         [
@@ -4281,22 +4314,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:WholePartRelation ;
-            sh:message """
-- The object of the rico:wholePartRelation_role property on a rico:WholePartRelation must be a rico:WholePartRelation""" ;
-            sh:path rico:wholePartRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:class rico:Thing ;
-            sh:message """
-- The object of the rico:relationHasSource property on a rico:WholePartRelation must be a rico:Thing""" ;
-            sh:path rico:relationHasSource ;
-            sh:severity sh:Violation ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Thing ;
             sh:message """
 - A rico:WholePartRelation must have at least 1 rico:relationHasTarget statements
@@ -4304,6 +4321,25 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "1"^^xsd:nonNegativeInteger ;
             sh:path rico:relationHasTarget ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:Thing ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A rico:WholePartRelation must be the target of exactly 1 rico:relationHasSource statements
+- The object of the rico:relationHasSource property on a rico:WholePartRelation must be a rico:Thing""" ;
+            sh:minCount "1"^^xsd:nonNegativeInteger ;
+            sh:path rico:relationHasSource ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:WholePartRelation ;
+            sh:message """
+- The object of the rico:wholePartRelation_role property on a rico:WholePartRelation must be a rico:WholePartRelation""" ;
+            sh:path rico:wholePartRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:WholePartRelation ;
 .
@@ -4314,14 +4350,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sh:property 
         [
             a sh:PropertyShape ;
-            sh:class rico:WorkRelation ;
-            sh:message """
-- The object of the rico:workRelation_role property on a rico:WorkRelation must be a rico:WorkRelation""" ;
-            sh:path rico:workRelation_role ;
-            sh:severity sh:Warning ;
-        ] ,
-        [
-            a sh:PropertyShape ;
             sh:class rico:Agent ;
             sh:message """
 - A rico:WorkRelation must have at least 2 rico:relationConnects statements
@@ -4329,6 +4357,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             sh:minCount "2"^^xsd:nonNegativeInteger ;
             sh:path rico:relationConnects ;
             sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class rico:WorkRelation ;
+            sh:message """
+- The object of the rico:workRelation_role property on a rico:WorkRelation must be a rico:WorkRelation""" ;
+            sh:path rico:workRelation_role ;
+            sh:severity sh:Warning ;
         ] ;
     sh:targetClass rico:WorkRelation ;
 .
@@ -4336,11 +4372,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 :
     a owl:Ontology ;
     owl:versionIRI :0.0.1 ;
-    owl:versionInfo ":0.0.1 Generated by OntoShacl:v0.0.1 <https://github.com/Kurrawong/ontoshacl>" ;
+    owl:versionInfo ":0.0.1 Generated by OntoShacl:v0.1.0 <https://github.com/Kurrawong/ontoshacl>" ;
     schema:creator <https://kurrawong.ai/people#lawson-lewis> ;
-    schema:dateCreated "2026-01-05"^^xsd:date ;
-    schema:dateModified "2026-01-05"^^xsd:date ;
-    schema:description "Unofficial SHACL Shapes Validator for the Records in Contect Ontology [RiC-O]" ;
+    schema:dateCreated "2026-01-08"^^xsd:date ;
+    schema:dateModified "2026-01-08"^^xsd:date ;
+    schema:description "Unofficial SHACL Shapes Validator for RiC-O" ;
     schema:name "RiC-O Validator" ;
     schema:publisher <https://kurrawong.ai> ;
 .

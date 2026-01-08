@@ -44,26 +44,80 @@ To run it:
 $ python ontoshacl.py
 ```
 
-## Disclaimer
+## Status
 
-This script has been tested against the RiC-O ontology only.
-I'm certain there are gaps in the implementation.
+The script has been significantly enhanced to handle comprehensive OWL to SHACL conversion. It has been tested with:
 
-Contributions welcome.
+- **RiC-O ontology**: The original test case with qualified cardinality restrictions
+- **Comprehensive test ontology**: Includes all major OWL restriction types
 
-### Implmentation status
+### Known Limitations
 
-Actually implemented things
+While the script now handles most common OWL restriction types, there are some advanced features that could be added:
 
-| owl                         | shacl       |
-| --------------------------- | ----------- |
-| rdfs:range                  | sh:class    |
-| owl:onClass                 | sh:class    |
-| owl:minQualifiedCardinality | sh:minCount |
-| owl:maxQualifiedCardinality | sh:maxCount |
+- **Complex class expressions**: Currently handles `owl:unionOf`, but could be extended to support `owl:intersectionOf`, `owl:complementOf`, etc.
+- **Property chains**: Could handle `owl:propertyChainAxiom` for complex property paths
+- **Datatype restrictions**: Could add more sophisticated handling of datatype restrictions
+- **Advanced cardinality**: Could handle more complex cardinality expressions
 
-See table from <https://spinrdf.org/shacl-and-owl.html> for an idea of what
-else could be implemented.
+Contributions to extend these capabilities are welcome!
+
+### Implementation status
+
+The enhanced script now supports comprehensive OWL to SHACL conversion:
+
+| OWL Restriction Type          | SHACL Equivalent                     | Status         |
+| ----------------------------- | ------------------------------------ | -------------- |
+| rdfs:range                    | sh:class                             | ✅ Implemented |
+| owl:onClass                   | sh:class                             | ✅ Implemented |
+| owl:minQualifiedCardinality   | sh:minCount + sh:class               | ✅ Implemented |
+| owl:maxQualifiedCardinality   | sh:maxCount + sh:class               | ✅ Implemented |
+| owl:qualifiedCardinality      | sh:minCount + sh:maxCount + sh:class | ✅ Implemented |
+| owl:minCardinality            | sh:minCount                          | ✅ Implemented |
+| owl:maxCardinality            | sh:maxCount                          | ✅ Implemented |
+| owl:cardinality               | sh:minCount + sh:maxCount            | ✅ Implemented |
+| owl:someValuesFrom            | sh:class                             | ✅ Implemented |
+| owl:allValuesFrom             | sh:class                             | ✅ Implemented |
+| owl:hasValue                  | sh:hasValue                          | ✅ Implemented |
+| owl:unionOf (in restrictions) | sh:or                                | ✅ Implemented |
+
+### Features
+
+- **Comprehensive OWL restriction handling**: Converts all common OWL restriction types to their SHACL equivalents
+- **Complex class expressions**: Handles union classes (`owl:unionOf`) in restrictions and converts them to `sh:or`
+- **Qualified and unqualified cardinality**: Supports both qualified (with class restrictions) and unqualified cardinality restrictions
+- **Value restrictions**: Converts `owl:someValuesFrom`, `owl:allValuesFrom`, and `owl:hasValue` restrictions
+- **Helpful error messages**: Automatically generates descriptive validation messages for each SHACL constraint
+- **Configurable severity**: Domain/range restrictions can be included with configurable severity levels
+- **Validator metadata**: Includes comprehensive ontology metadata for the generated validator
+
+### OWL to SHACL Mapping Details
+
+1. **Existential Restrictions** (`owl:someValuesFrom`)
+   - OWL: `Class rdfs:subClassOf [ owl:onProperty prop; owl:someValuesFrom SomeClass ]`
+   - SHACL: `sh:property [ sh:path prop; sh:class SomeClass ]`
+
+2. **Universal Restrictions** (`owl:allValuesFrom`)
+   - OWL: `Class rdfs:subClassOf [ owl:onProperty prop; owl:allValuesFrom SomeClass ]`
+   - SHACL: `sh:property [ sh:path prop; sh:class SomeClass ]`
+
+3. **Value Restrictions** (`owl:hasValue`)
+   - OWL: `Class rdfs:subClassOf [ owl:onProperty prop; owl:hasValue specificInstance ]`
+   - SHACL: `sh:property [ sh:path prop; sh:hasValue specificInstance ]`
+
+4. **Qualified Cardinality Restrictions**
+   - OWL: `Class rdfs:subClassOf [ owl:onProperty prop; owl:onClass SomeClass; owl:minQualifiedCardinality "1" ]`
+   - SHACL: `sh:property [ sh:path prop; sh:class SomeClass; sh:minCount 1 ]`
+
+5. **Unqualified Cardinality Restrictions**
+   - OWL: `Class rdfs:subClassOf [ owl:onProperty prop; owl:minCardinality "1" ]`
+   - SHACL: `sh:property [ sh:path prop; sh:minCount 1 ]`
+
+6. **Complex Class Expressions**
+   - OWL: `Class rdfs:subClassOf [ owl:onProperty prop; owl:someValuesFrom [ owl:unionOf (Class1 Class2) ] ]`
+   - SHACL: `sh:property [ sh:path prop; sh:or ( [sh:class Class1] [sh:class Class2] ) ]`
+
+See the full table at <https://spinrdf.org/shacl-and-owl.html> for more details on OWL-SHACL mappings.
 
 ## Contact
 

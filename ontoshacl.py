@@ -59,16 +59,22 @@ from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF, RDFS, SDO, SH, XSD
 
-SCRIPT_VERSION = "0.0.1"
+SCRIPT_VERSION = "0.1.0"
 
 
 @dataclass(frozen=True)
 class Restriction:
     on_klass: tuple[URIRef]
-    on_property: [URIRef]
+    on_property: URIRef
     min_cardinality: Literal | None = None
     max_cardinality: Literal | None = None
-    # TODO: handle other resriction predicates
+    min_qualified_cardinality: Literal | None = None
+    max_qualified_cardinality: Literal | None = None
+    qualified_cardinality: Literal | None = None
+    some_values_from: URIRef | None = None
+    all_values_from: URIRef | None = None
+    has_value: URIRef | None = None
+    restriction_type: str = "restriction"
 
 
 class Ontology:
@@ -152,26 +158,112 @@ class Ontology:
             }
             restriction_uris = restriction_uris.intersection(subklass_uris)
         for restriction_uri in restriction_uris:
+            on_property = self.graph.value(restriction_uri, OWL.onProperty, None)
+
+            # Handle value restrictions first (needed for restriction type determination)
+            some_values_from = self.graph.value(
+                restriction_uri, OWL.someValuesFrom, None, default=None
+            )
+            all_values_from = self.graph.value(
+                restriction_uri, OWL.allValuesFrom, None, default=None
+            )
+            has_value = self.graph.value(
+                restriction_uri, OWL.hasValue, None, default=None
+            )
+
+            # Determine restriction type early for use in on_klass determination
+            restriction_type = "restriction"
+            if some_values_from:
+                restriction_type = "someValuesFrom"
+            elif all_values_from:
+                restriction_type = "allValuesFrom"
+            elif has_value:
+                restriction_type = "hasValue"
+
             on_klass = self.graph.value(restriction_uri, OWL.onClass, None)
-            if isinstance(on_klass, BNode):
+            if on_klass is None:
+                # For restrictions without explicit onClass, use the class from the restriction type
+                if restriction_type == "someValuesFrom" and some_values_from:
+                    on_klass = (some_values_from,)
+                elif restriction_type == "allValuesFrom" and all_values_from:
+                    on_klass = (all_values_from,)
+                elif restriction_type == "hasValue" and has_value:
+                    # For hasValue, we don't need a class restriction
+                    on_klass = ()
+                else:
+                    # For other restrictions without onClass, we don't have a class restriction
+                    on_klass = ()
+            elif isinstance(on_klass, BNode):
                 union_bnode = self.graph.value(on_klass, OWL.unionOf, None)
                 on_klass = tuple(Collection(self.graph, union_bnode))
             else:
                 on_klass = (on_klass,)
-            on_property = self.graph.value(restriction_uri, OWL.onProperty, None)
-            min_cardinality = self.graph.value(
+
+            # Handle qualified cardinality restrictions
+            min_qualified_cardinality = self.graph.value(
                 restriction_uri, OWL.minQualifiedCardinality, None, default=None
             )
-            # TODO: handle unqualified min_cardinality
-            max_cardinality = self.graph.value(
+            max_qualified_cardinality = self.graph.value(
                 restriction_uri, OWL.maxQualifiedCardinality, None, default=None
             )
-            # TODO: handle unqualified max_cardinality
+            qualified_cardinality = self.graph.value(
+                restriction_uri, OWL.qualifiedCardinality, None, default=None
+            )
+
+            # Handle unqualified cardinality restrictions
+            min_cardinality = self.graph.value(
+                restriction_uri, OWL.minCardinality, None, default=None
+            )
+            max_cardinality = self.graph.value(
+                restriction_uri, OWL.maxCardinality, None, default=None
+            )
+            cardinality = self.graph.value(
+                restriction_uri, OWL.cardinality, None, default=None
+            )
+
+            # Update restriction type for cardinality restrictions
+            if any(
+                [
+                    min_qualified_cardinality,
+                    max_qualified_cardinality,
+                    qualified_cardinality,
+                ]
+            ):
+                restriction_type = "qualifiedCardinality"
+            elif any([min_cardinality, max_cardinality, cardinality]):
+                restriction_type = "cardinality"
+
+            # Determine restriction type early for use in on_klass determination
+            restriction_type = "restriction"
+            if some_values_from:
+                restriction_type = "someValuesFrom"
+            elif all_values_from:
+                restriction_type = "allValuesFrom"
+            elif has_value:
+                restriction_type = "hasValue"
+            elif any(
+                [
+                    min_qualified_cardinality,
+                    max_qualified_cardinality,
+                    qualified_cardinality,
+                ]
+            ):
+                restriction_type = "qualifiedCardinality"
+            elif any([min_cardinality, max_cardinality, cardinality]):
+                restriction_type = "cardinality"
+
             restriction = Restriction(
                 on_klass=on_klass,
                 on_property=on_property,
                 min_cardinality=min_cardinality,
                 max_cardinality=max_cardinality,
+                min_qualified_cardinality=min_qualified_cardinality,
+                max_qualified_cardinality=max_qualified_cardinality,
+                qualified_cardinality=qualified_cardinality,
+                some_values_from=some_values_from,
+                all_values_from=all_values_from,
+                has_value=has_value,
+                restriction_type=restriction_type,
             )
             restrictions.append(restriction)
         return restrictions
@@ -311,21 +403,127 @@ class Shacl:
                 )
 
             self.graph.add((prop_bnode, SH.severity, SH.Violation))
-            if len(restriction.on_klass) == 1:
-                self.graph.add((prop_bnode, SH["class"], restriction.on_klass[0]))
-            elif len(restriction.on_klass) > 1:
-                collection = Collection(self.graph, BNode())
-                for restriction_klass in restriction.on_klass:
-                    k = BNode()
-                    self.graph.add((k, SH["class"], restriction_klass))
-                    collection.append(k)
-                self.graph.add((prop_bnode, SH["or"], collection.uri))
 
-            if restriction.min_cardinality:
-                self.graph.add((prop_bnode, SH.minCount, restriction.min_cardinality))
+            # Handle different types of restrictions
+            if restriction.restriction_type == "someValuesFrom":
+                # owl:someValuesFrom -> sh:class (exists restriction)
+                if restriction.some_values_from:
+                    if isinstance(restriction.some_values_from, BNode):
+                        # Handle union/intersection/complement
+                        union_bnode = self.graph.value(
+                            restriction.some_values_from, OWL.unionOf, None
+                        )
+                        if union_bnode:
+                            collection = Collection(self.graph, BNode())
+                            for union_klass in Collection(self.graph, union_bnode):
+                                k = BNode()
+                                self.graph.add((k, SH["class"], union_klass))
+                                collection.append(k)
+                            self.graph.add((prop_bnode, SH["or"], collection.uri))
+                        else:
+                            # Handle other complex class expressions
+                            self.graph.add(
+                                (prop_bnode, SH["class"], restriction.some_values_from)
+                            )
+                    else:
+                        self.graph.add(
+                            (prop_bnode, SH["class"], restriction.some_values_from)
+                        )
 
-            if restriction.max_cardinality:
-                self.graph.add((prop_bnode, SH.maxCount, restriction.max_cardinality))
+            elif restriction.restriction_type == "allValuesFrom":
+                # owl:allValuesFrom -> sh:class (universal restriction)
+                if restriction.all_values_from:
+                    if isinstance(restriction.all_values_from, BNode):
+                        # Handle union/intersection/complement
+                        union_bnode = self.graph.value(
+                            restriction.all_values_from, OWL.unionOf, None
+                        )
+                        if union_bnode:
+                            collection = Collection(self.graph, BNode())
+                            for union_klass in Collection(self.graph, union_bnode):
+                                k = BNode()
+                                self.graph.add((k, SH["class"], union_klass))
+                                collection.append(k)
+                            self.graph.add((prop_bnode, SH["or"], collection.uri))
+                        else:
+                            # Handle other complex class expressions
+                            self.graph.add(
+                                (prop_bnode, SH["class"], restriction.all_values_from)
+                            )
+                    else:
+                        self.graph.add(
+                            (prop_bnode, SH["class"], restriction.all_values_from)
+                        )
+
+            elif restriction.restriction_type == "hasValue":
+                # owl:hasValue -> sh:hasValue
+                if restriction.has_value:
+                    self.graph.add((prop_bnode, SH.hasValue, restriction.has_value))
+
+            elif restriction.restriction_type in [
+                "qualifiedCardinality",
+                "cardinality",
+            ]:
+                # Handle cardinality restrictions
+                if restriction.qualified_cardinality:
+                    self.graph.add(
+                        (prop_bnode, SH.minCount, restriction.qualified_cardinality)
+                    )
+                    self.graph.add(
+                        (prop_bnode, SH.maxCount, restriction.qualified_cardinality)
+                    )
+                else:
+                    if (
+                        restriction.min_qualified_cardinality
+                        or restriction.min_cardinality
+                    ):
+                        min_count = (
+                            restriction.min_qualified_cardinality
+                            or restriction.min_cardinality
+                        )
+                        self.graph.add((prop_bnode, SH.minCount, min_count))
+                    if (
+                        restriction.max_qualified_cardinality
+                        or restriction.max_cardinality
+                    ):
+                        max_count = (
+                            restriction.max_qualified_cardinality
+                            or restriction.max_cardinality
+                        )
+                        self.graph.add((prop_bnode, SH.maxCount, max_count))
+
+                # Add class restrictions for qualified cardinality
+                if len(restriction.on_klass) == 1:
+                    self.graph.add((prop_bnode, SH["class"], restriction.on_klass[0]))
+                elif len(restriction.on_klass) > 1:
+                    collection = Collection(self.graph, BNode())
+                    for restriction_klass in restriction.on_klass:
+                        k = BNode()
+                        self.graph.add((k, SH["class"], restriction_klass))
+                        collection.append(k)
+                    self.graph.add((prop_bnode, SH["or"], collection.uri))
+
+            else:
+                # Handle legacy qualified cardinality restrictions
+                if len(restriction.on_klass) == 1:
+                    self.graph.add((prop_bnode, SH["class"], restriction.on_klass[0]))
+                elif len(restriction.on_klass) > 1:
+                    collection = Collection(self.graph, BNode())
+                    for restriction_klass in restriction.on_klass:
+                        k = BNode()
+                        self.graph.add((k, SH["class"], restriction_klass))
+                        collection.append(k)
+                    self.graph.add((prop_bnode, SH["or"], collection.uri))
+
+                if restriction.min_cardinality:
+                    self.graph.add(
+                        (prop_bnode, SH.minCount, restriction.min_cardinality)
+                    )
+
+                if restriction.max_cardinality:
+                    self.graph.add(
+                        (prop_bnode, SH.maxCount, restriction.max_cardinality)
+                    )
 
         # Add a sh:message for each property shape
         for property_shape in self.property_shapes(for_nodeshape=shape_uri):
@@ -375,6 +573,13 @@ class Shacl:
                     )
                 else:
                     message += f"a {sh_klasses[0].n3(namespace_manager=self.graph.namespace_manager)}"
+
+            # Handle hasValue restrictions
+            has_value = self.graph.value(
+                property_shape, SH.hasValue, None, default=None
+            )
+            if has_value:
+                message += f"\n- The object of the {path_str} property on a {klass_str} must be exactly {has_value.n3(namespace_manager=self.graph.namespace_manager)}"
             self.graph.add((property_shape, SH.message, Literal(message)))
 
     def node_shapes(self, for_klass: URIRef | None = None) -> set[URIRef]:
@@ -419,19 +624,17 @@ if __name__ == "__main__":
     print("-" * 80)
     print(f"\nExtracting SHACL Rules from the OWL Ontology at:\n\n\t{src}\n\n")
 
-    rico = Ontology(src=src, uri=uri)
+    ont = Ontology(src=src, uri=uri)
 
     namespace = Namespace("https://kurrawong.ai/validator/rico#")
     shacl = Shacl(
-        base_ontology=rico,
+        base_ontology=ont,
         base_ontology_prefix="rico",
         namespace=namespace,
         versionIRI=namespace["0.0.1"],
         creator=URIRef("https://kurrawong.ai/people#lawson-lewis"),
         name=Literal("RiC-O Validator"),
-        description=Literal(
-            "Unofficial SHACL Shapes Validator for the Records in Contect Ontology [RiC-O]"
-        ),
+        description=Literal("Unofficial SHACL Shapes Validator for RiC-O"),
         publisher=URIRef("https://kurrawong.ai"),
         include_domain_range_restrictions=True,
         domain_range_restriction_severity=SH.Warning,
