@@ -1,0 +1,664 @@
+PREFIX : <https://kurrawong.ai/validator/time#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+:DateTimeDescriptionShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:gDay ;
+            sh:path time:day ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:gYear ;
+            sh:path time:year ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:hasValue <http://www.opengis.net/def/uom/ISO-8601/0/Gregorian> ;
+            sh:path time:hasTRS ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:gMonth ;
+            sh:path time:month ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:DateTimeDescription ;
+.
+
+:DateTimeIntervalShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property
+        [
+            a sh:PropertyShape ;
+            sh:class time:GeneralDateTimeDescription ;
+            sh:message """
+- The object of the time:hasDateTimeDescription property on a time:DateTimeInterval must be a time:GeneralDateTimeDescription""" ;
+            sh:path time:hasDateTimeDescription ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass time:DateTimeInterval ;
+.
+
+:DayOfWeekShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:targetClass time:DayOfWeek ;
+.
+
+:DurationDescriptionShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:decimal ;
+            sh:path time:years ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:decimal ;
+            sh:path time:minutes ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:decimal ;
+            sh:path time:hours ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:decimal ;
+            sh:path time:seconds ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:hasValue <http://www.opengis.net/def/uom/ISO-8601/0/Gregorian> ;
+            sh:path time:hasTRS ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:decimal ;
+            sh:path time:days ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:decimal ;
+            sh:path time:weeks ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class xsd:decimal ;
+            sh:path time:months ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:DurationDescription ;
+.
+
+:DurationShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:path time:unitType ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:numericDuration ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:Duration ;
+.
+
+:GeneralDateTimeDescriptionShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class time:DayOfWeek ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A time:GeneralDateTimeDescription must not have more than 0 time:dayOfWeek statements
+- The object of the time:dayOfWeek property on a time:GeneralDateTimeDescription must be a time:DayOfWeek""" ;
+            sh:path time:dayOfWeek ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:TimeZone ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:timeZone ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:day ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:unitType ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A time:GeneralDateTimeDescription must not have more than 0 time:week statements""" ;
+            sh:path time:week ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A time:GeneralDateTimeDescription must not have more than 0 time:second statements""" ;
+            sh:path time:second ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:month ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:dayOfYear ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A time:GeneralDateTimeDescription must not have more than 0 time:minute statements""" ;
+            sh:path time:minute ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:MonthOfYear ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:monthOfYear ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:hour ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A time:GeneralDateTimeDescription must not have more than 0 time:year statements""" ;
+            sh:path time:year ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:GeneralDateTimeDescription ;
+.
+
+:GeneralDurationDescriptionShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:months ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:days ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:minutes ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A time:GeneralDurationDescription must not have more than 0 time:weeks statements""" ;
+            sh:path time:weeks ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:hasTRS ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:hours ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:path time:years ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:maxCount "1"^^xsd:nonNegativeInteger ;
+            sh:message """
+- A time:GeneralDurationDescription must not have more than 0 time:seconds statements""" ;
+            sh:path time:seconds ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:GeneralDurationDescription ;
+.
+
+:InstantShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class time:TemporalPosition ;
+            sh:message """
+- The object of the time:inTemporalPosition property on a time:Instant must be a time:TemporalPosition""" ;
+            sh:path time:inTemporalPosition ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:GeneralDateTimeDescription ;
+            sh:message """
+- The object of the time:inDateTime property on a time:Instant must be a time:GeneralDateTimeDescription""" ;
+            sh:path time:inDateTime ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:TimePosition ;
+            sh:message """
+- The object of the time:inTimePosition property on a time:Instant must be a time:TimePosition""" ;
+            sh:path time:inTimePosition ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass time:Instant ;
+.
+
+:IntervalShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property
+        [
+            a sh:PropertyShape ;
+            sh:class time:Instant ;
+            sh:message """
+- The object of the time:inside property on a time:Interval must be a time:Instant""" ;
+            sh:path time:inside ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass time:Interval ;
+.
+
+:JanuaryShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:hasValue time:unitMonth ;
+            sh:path time:unitType ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:hasValue "--01" ;
+            sh:path time:month ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:January ;
+.
+
+:MonthOfYearShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:path time:week ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:year ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:month ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:hasValue time:unitMonth ;
+            sh:path time:unitType ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:hour ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:minute ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:day ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:second ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:MonthOfYear ;
+.
+
+:ProperIntervalShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalStarts property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalStarts ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalOverlaps property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalOverlaps ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalMeets property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalMeets ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalFinishes property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalFinishes ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalBefore property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalBefore ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalDuring property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalDuring ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalDisjoint property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalDisjoint ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalMetBy property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalMetBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalOverlappedBy property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalOverlappedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalAfter property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalAfter ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalContains property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalContains ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalIn property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalIn ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalEquals property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalEquals ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalFinishedBy property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalFinishedBy ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:ProperInterval ;
+            sh:message """
+- The object of the time:intervalStartedBy property on a time:ProperInterval must be a time:ProperInterval""" ;
+            sh:path time:intervalStartedBy ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass time:ProperInterval ;
+.
+
+:TRSShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:targetClass time:TRS ;
+.
+
+:TemporalDurationShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:targetClass time:TemporalDuration ;
+.
+
+:TemporalEntityShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:class time:TemporalEntity ;
+            sh:message """
+- The object of the time:before property on a time:TemporalEntity must be a time:TemporalEntity""" ;
+            sh:path time:before ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:Instant ;
+            sh:message """
+- The object of the time:hasEnd property on a time:TemporalEntity must be a time:Instant""" ;
+            sh:path time:hasEnd ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:TemporalEntity ;
+            sh:message """
+- The object of the time:after property on a time:TemporalEntity must be a time:TemporalEntity""" ;
+            sh:path time:after ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:TemporalDuration ;
+            sh:message """
+- The object of the time:hasTemporalDuration property on a time:TemporalEntity must be a time:TemporalDuration""" ;
+            sh:path time:hasTemporalDuration ;
+            sh:severity sh:Warning ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:class time:Instant ;
+            sh:message """
+- The object of the time:hasBeginning property on a time:TemporalEntity must be a time:Instant""" ;
+            sh:path time:hasBeginning ;
+            sh:severity sh:Warning ;
+        ] ;
+    sh:targetClass time:TemporalEntity ;
+.
+
+:TemporalPositionShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property
+        [
+            a sh:PropertyShape ;
+            sh:path time:hasTRS ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:TemporalPosition ;
+.
+
+:TemporalUnitShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:targetClass time:TemporalUnit ;
+.
+
+:TimePositionShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:targetClass time:TimePosition ;
+.
+
+:TimeZoneShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:targetClass time:TimeZone ;
+.
+
+:YearShape
+    a sh:NodeShape ;
+    rdfs:isDefinedBy : ;
+    sh:property 
+        [
+            a sh:PropertyShape ;
+            sh:path time:minutes ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:seconds ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:hours ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:months ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:years ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:weeks ;
+            sh:severity sh:Violation ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path time:days ;
+            sh:severity sh:Violation ;
+        ] ;
+    sh:targetClass time:Year ;
+.
+
+:
+    a owl:Ontology ;
+    owl:versionIRI :0.0.1 ;
+    owl:versionInfo ":0.0.1 Generated by OntoShacl:v0.1.0 <https://github.com/Kurrawong/ontoshacl>" ;
+    schema:creator <https://kurrawong.ai/people#lawson-lewis> ;
+    schema:dateCreated "2026-01-05"^^xsd:date ;
+    schema:dateModified "2026-01-05"^^xsd:date ;
+    schema:description "Unofficial SHACL Shapes Validator for the Time Ontology" ;
+    schema:name "Time Validator" ;
+    schema:publisher <https://kurrawong.ai> ;
+.
