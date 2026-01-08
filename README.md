@@ -29,20 +29,91 @@ about creator, version etc.
 
 ## Usage
 
-See the `if __name__ == "__main__"` section at the bottom of
-[ontoshacl.py](./ontoshacl.py) for configuration.
+OntoSHACL now supports both CLI arguments and JSON configuration files for flexible configuration.
 
-Basically, you just need to provide
-
-- the path to the source ontology, a
-- path to output the SHACL rules, and
-- the metadata details for the validator.
-
-To run it:
+### CLI Usage
 
 ```bash
-$ python ontoshacl.py
+# Basic usage with required parameters
+$ python ontoshacl.py \
+    --src example_data/rico.ttl \
+    --uri "https://www.ica.org/standards/RiC/ontology#" \
+    --target output.ttl \
+    --namespace "https://example.com/validator#" \
+    --creator "https://example.com/people#person"
+
+# Advanced usage with all options
+$ python ontoshacl.py \
+    --src example_data/rico.ttl \
+    --uri "https://www.ica.org/standards/RiC/ontology#" \
+    --target output.ttl \
+    --namespace "https://example.com/validator#" \
+    --versionIRI "1.0.0" \
+    --creator "https://example.com/people#person" \
+    --name "My Validator" \
+    --description "SHACL validator for my ontology" \
+    --publisher "https://example.com" \
+    --dateCreated "2023-01-01" \
+    --base-ontology-prefix "myont" \
+    --domain-range-restriction-severity SH.Violation
+
+# To see all available options
+$ python ontoshacl.py --help
 ```
+
+### JSON Configuration
+
+Create a JSON configuration file (e.g., `config.json`):
+
+```json
+{
+    "src": "example_data/rico.ttl",
+    "uri": "https://www.ica.org/standards/RiC/ontology#",
+    "target": "output.ttl",
+    "namespace": "https://example.com/validator#",
+    "versionIRI": "1.0.0",
+    "creator": "https://example.com/people#person",
+    "name": "My Validator",
+    "description": "SHACL validator for my ontology",
+    "publisher": "https://example.com",
+    "dateCreated": "2023-01-01",
+    "base_ontology_prefix": "myont",
+    "include_domain_range_restrictions": true,
+    "domain_range_restriction_severity": "SH.Warning"
+}
+```
+
+Then run with:
+
+```bash
+$ python ontoshacl.py --config config.json
+```
+
+### Configuration Options
+
+**Required Parameters:**
+- `--src`: Path to source ontology file
+- `--uri`: URI for the base ontology
+- `--target`: Path to output SHACL rules file
+- `--namespace`: Namespace for the validator ontology
+- `--creator`: Creator URI for the validator ontology
+
+**Optional Parameters:**
+- `--versionIRI`: Version IRI for the validator ontology (default: namespace + "1.0.0")
+- `--name`: Name for the validator ontology
+- `--description`: Description for the validator ontology
+- `--publisher`: Publisher URI for the validator ontology
+- `--dateCreated`: Creation date (YYYY-MM-DD)
+- `--base-ontology-prefix`: Prefix for the base ontology
+- `--include-domain-range-restrictions`: Include domain/range restrictions (default: true)
+- `--no-domain-range-restrictions`: Exclude domain/range restrictions
+- `--domain-range-restriction-severity`: Severity level (SH.Warning, SH.Violation, SH.Info)
+- `--config`: Path to JSON configuration file
+
+**Severity Levels:**
+- `SH.Warning`: Domain/range violations will be warnings
+- `SH.Violation`: Domain/range violations will be violations
+- `SH.Info`: Domain/range violations will be informational
 
 ## Disclaimer
 
