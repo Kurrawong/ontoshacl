@@ -17,4 +17,4 @@ dev = [
 ]
 
 [tool.isort]
-profile = black
+profile = "black"

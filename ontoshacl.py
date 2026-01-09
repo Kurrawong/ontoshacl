@@ -32,19 +32,8 @@ Requirements
 Usage
 ------
 
-See the if __name__ == "__main__" section at the bottom of this file
-for configuration.
-
-Basically, you just need to provide
-
-  - the path to the source ontology, a
-  - path to output the SHACL rules, and
-  - the metadata details for the validator.
-
-To run it:
-
 ```
-$ python ontoshacl.py
+$ python ontoshacl.py --help
 ```
 
 """
@@ -64,16 +53,15 @@ from rdflib.namespace import OWL, RDF, RDFS, SDO, SH, XSD
 
 class Configuration:
     """Configuration class for OntoSHACL
-    
+
     Handles both CLI arguments and JSON configuration files.
     """
-    
+
     def __init__(self):
         self.config = {
             # Base Ontology details
             "src": None,
             "uri": None,
-            
             # Target Validator details
             "target": None,
             "namespace": None,
@@ -84,191 +72,168 @@ class Configuration:
             "publisher": None,
             "dateCreated": None,
             "base_ontology_prefix": None,
-            
             # SHACL Generation options
             "include_domain_range_restrictions": True,
             "domain_range_restriction_severity": "SH.Warning",
         }
-    
+
     def parse_cli_args(self):
         """Parse command line arguments"""
         parser = argparse.ArgumentParser(
             description="OntoSHACL - Generate SHACL rules from OWL ontologies"
         )
-        
+
         # Base Ontology details
-        parser.add_argument(
-            "--src", 
-            help="Path to source ontology file",
-            default=None
-        )
-        parser.add_argument(
-            "--uri", 
-            help="URI for the base ontology",
-            default=None
-        )
-        
+        parser.add_argument("--src", help="Path to source ontology file", default=None)
+        parser.add_argument("--uri", help="URI for the base ontology", default=None)
+
         # Target Validator details
         parser.add_argument(
-            "--target", 
-            help="Path to output SHACL rules file",
-            default=None
+            "--target", help="Path to output SHACL rules file", default=None
         )
         parser.add_argument(
-            "--namespace", 
-            help="Namespace for the validator ontology",
-            default=None
+            "--namespace", help="Namespace for the validator ontology", default=None
         )
         parser.add_argument(
-            "--versionIRI", 
-            help="Version IRI for the validator ontology",
-            default=None
+            "--versionIRI", help="Version IRI for the validator ontology", default=None
         )
         parser.add_argument(
-            "--creator", 
-            help="Creator URI for the validator ontology",
-            default=None
+            "--creator", help="Creator URI for the validator ontology", default=None
         )
         parser.add_argument(
-            "--name", 
-            help="Name for the validator ontology",
-            default=None
+            "--name", help="Name for the validator ontology", default=None
         )
         parser.add_argument(
-            "--description", 
-            help="Description for the validator ontology",
-            default=None
+            "--description", help="Description for the validator ontology", default=None
         )
         parser.add_argument(
-            "--publisher", 
-            help="Publisher URI for the validator ontology",
-            default=None
+            "--publisher", help="Publisher URI for the validator ontology", default=None
         )
         parser.add_argument(
-            "--dateCreated", 
+            "--dateCreated",
             help="Creation date for the validator ontology (YYYY-MM-DD)",
-            default=None
+            default=None,
         )
         parser.add_argument(
-            "--base-ontology-prefix", 
-            help="Prefix for the base ontology",
-            default=None
+            "--base-ontology-prefix", help="Prefix for the base ontology", default=None
         )
-        
+
         # SHACL Generation options
         parser.add_argument(
-            "--include-domain-range-restrictions", 
+            "--include-domain-range-restrictions",
             help="Include domain/range restrictions",
             action="store_true",
-            default=None
+            default=None,
         )
         parser.add_argument(
-            "--no-domain-range-restrictions", 
+            "--no-domain-range-restrictions",
             help="Exclude domain/range restrictions",
             action="store_false",
-            dest="include_domain_range_restrictions"
+            dest="include_domain_range_restrictions",
         )
         parser.add_argument(
-            "--domain-range-restriction-severity", 
+            "--domain-range-restriction-severity",
             help="Severity level for domain/range restrictions (SH.Warning, SH.Violation, SH.Info)",
-            default=None
+            default=None,
         )
-        
+
         # Configuration file
         parser.add_argument(
-            "--config", 
-            help="Path to JSON configuration file",
-            default=None
+            "--config", help="Path to JSON configuration file", default=None
         )
-        
+
         args = parser.parse_args()
-        
+
         # Update config from CLI args
         for key, value in vars(args).items():
             if value is not None and key in self.config:
                 self.config[key] = value
-        
+
         return args
-    
+
     def load_from_json(self, config_file: Path):
         """Load configuration from JSON file"""
         try:
-            with open(config_file, 'r') as f:
+            with open(config_file, "r") as f:
                 json_config = json.load(f)
-            
+
             # Update config from JSON
             for key, value in json_config.items():
                 if key in self.config:
                     self.config[key] = value
-            
+
             return True
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Error loading config file: {e}")
             return False
-    
+
     def get_config(self):
         """Get the final configuration with proper type conversion"""
         config = self.config.copy()
-        
+
         # Convert string URIs to URIRef objects
         uri_fields = ["uri", "namespace", "versionIRI", "creator", "publisher"]
         for field in uri_fields:
             if config[field] and isinstance(config[field], str):
                 config[field] = URIRef(config[field])
-        
+
         # Convert namespace to Namespace object if it's a URIRef
         if isinstance(config["namespace"], URIRef):
             config["namespace"] = Namespace(str(config["namespace"]))
-        
+
         # Convert versionIRI to URIRef within namespace if it's a string
         if isinstance(config["versionIRI"], str) and config["namespace"]:
             config["versionIRI"] = config["namespace"][config["versionIRI"]]
-        
+
         # Convert string literals to Literal objects
         literal_fields = ["name", "description"]
         for field in literal_fields:
             if config[field] and isinstance(config[field], str):
                 config[field] = Literal(config[field])
-        
+
         # Convert dateCreated to Literal with XSD.date datatype
         if config["dateCreated"] and isinstance(config["dateCreated"], str):
             config["dateCreated"] = Literal(config["dateCreated"], datatype=XSD.date)
-        
+
         # Convert severity string to URIRef
         severity_map = {
             "SH.Warning": SH.Warning,
             "SH.Violation": SH.Violation,
-            "SH.Info": SH.Info
+            "SH.Info": SH.Info,
         }
         if isinstance(config["domain_range_restriction_severity"], str):
             config["domain_range_restriction_severity"] = severity_map.get(
                 config["domain_range_restriction_severity"], SH.Warning
             )
-        
+
         # Convert boolean strings to boolean values
         if isinstance(config["include_domain_range_restrictions"], str):
-            config["include_domain_range_restrictions"] = config["include_domain_range_restrictions"].lower() in ["true", "1", "yes"]
-        
+            config["include_domain_range_restrictions"] = config[
+                "include_domain_range_restrictions"
+            ].lower() in ["true", "1", "yes"]
+
         return config
-    
+
     def validate(self):
         """Validate the configuration"""
         required_fields = ["src", "uri", "target", "namespace", "creator"]
-        
+
         missing_fields = []
         for field in required_fields:
             if not self.config[field]:
                 missing_fields.append(field)
-        
+
         if missing_fields:
-            raise ValueError(f"Missing required configuration fields: {', '.join(missing_fields)}")
-        
+            raise ValueError(
+                f"Missing required configuration fields: {', '.join(missing_fields)}"
+            )
+
         # Validate paths
         if self.config["src"]:
             src_path = Path(self.config["src"])
             if not src_path.exists():
                 raise ValueError(f"Source ontology file does not exist: {src_path}")
-        
+
         return True
 
 
@@ -634,19 +599,19 @@ if __name__ == "__main__":
 
     # Initialize configuration
     config = Configuration()
-    
+
     # Parse CLI arguments
     args = config.parse_cli_args()
-    
+
     # Load from JSON config file if provided
     if args.config:
         config_file = Path(args.config)
         if not config.load_from_json(config_file):
             print(f"Warning: Could not load configuration from {config_file}")
-    
+
     # Get final configuration with type conversion
     final_config = config.get_config()
-    
+
     # Validate configuration
     try:
         config.validate()
@@ -661,31 +626,37 @@ if __name__ == "__main__":
 
     print(f"OntoSHACL:v{SCRIPT_VERSION}")
     print("-" * 80)
-    print(f"\nExtracting SHACL Rules from the OWL Ontology at:\n\n\t{final_config['src']}\n\n")
+    print(
+        f"\nExtracting SHACL Rules from the OWL Ontology at:\n\n\t{final_config['src']}\n\n"
+    )
 
     # Create Ontology and Shacl instances
-    ont = Ontology(src=final_config['src'], uri=final_config['uri'])
-    
+    ont = Ontology(src=final_config["src"], uri=final_config["uri"])
+
     # Prepare shacl options
     shacl_opts = {
-        "base_ontology_prefix": final_config['base_ontology_prefix'],
-        "namespace": final_config['namespace'],
-        "versionIRI": final_config['versionIRI'],
-        "creator": final_config['creator'],
-        "name": final_config['name'],
-        "description": final_config['description'],
-        "publisher": final_config['publisher'],
-        "dateCreated": final_config['dateCreated'],
-        "include_domain_range_restrictions": final_config['include_domain_range_restrictions'],
-        "domain_range_restriction_severity": final_config['domain_range_restriction_severity'],
+        "base_ontology_prefix": final_config["base_ontology_prefix"],
+        "namespace": final_config["namespace"],
+        "versionIRI": final_config["versionIRI"],
+        "creator": final_config["creator"],
+        "name": final_config["name"],
+        "description": final_config["description"],
+        "publisher": final_config["publisher"],
+        "dateCreated": final_config["dateCreated"],
+        "include_domain_range_restrictions": final_config[
+            "include_domain_range_restrictions"
+        ],
+        "domain_range_restriction_severity": final_config[
+            "domain_range_restriction_severity"
+        ],
     }
 
     shacl = Shacl(base_ontology=ont, **shacl_opts)
-    
+
     # Write output
-    target_path = Path(final_config['target'])
+    target_path = Path(final_config["target"])
     target_path.write_text(str(shacl))
-    
+
     print(
         f"Generated\n"
         f"\n"
