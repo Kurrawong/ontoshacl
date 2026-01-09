@@ -1,7 +1,7 @@
 {
     "src": "example_data/rico.ttl",
     "uri": "https://www.ica.org/standards/RiC/ontology#",
-    "target": "example_data/rico-shacl-config.ttl",
+    "target": "example_data/rico-shacl.ttl",
     "namespace": "https://kurrawong.ai/validator/rico#",
     "versionIRI": "0.0.1",
     "creator": "https://kurrawong.ai/people#lawson-lewis",
