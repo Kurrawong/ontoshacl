@@ -1,0 +1,13 @@
+{
+  "src": "tests/ontologies/minimal-test.ttl",
+  "uri": "http://example.org/test/",
+  "target": "tests/output/test-shacl.ttl",
+  "namespace": "http://example.org/validator/test/",
+  "versionIRI": "0.0.1",
+  "creator": "https://kurrawong.ai/people#lawson-lewis",
+  "name": "Test Validator",
+  "publisher": "https://kurrawong.ai",
+  "base_ontology_prefix": "test",
+  "include_domain_range_restrictions": true,
+  "domain_range_restriction_severity": "SH.Warning"
+}
