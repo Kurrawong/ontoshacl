@@ -8,3 +8,13 @@ dependencies = [
     "pyshacl>=0.30.1",
     "rdflib>=7.5.0",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=25.12.0",
+    "isort>=7.0.0",
+    "ruff>=0.14.11",
+]
+
+[tool.isort]
+profile = "black"

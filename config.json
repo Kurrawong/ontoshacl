@@ -1,0 +1,14 @@
+{
+    "src": "example_data/rico.ttl",
+    "uri": "https://www.ica.org/standards/RiC/ontology#",
+    "target": "example_data/rico-shacl.ttl",
+    "namespace": "https://kurrawong.ai/validator/rico#",
+    "versionIRI": "0.0.1",
+    "creator": "https://kurrawong.ai/people#lawson-lewis",
+    "name": "RiC-O Validator (Config)",
+    "description": "SHACL Shapes Validator for RiC-O generated via JSON config",
+    "publisher": "https://kurrawong.ai",
+    "base_ontology_prefix": "rico",
+    "include_domain_range_restrictions": true,
+    "domain_range_restriction_severity": "SH.Warning"
+}

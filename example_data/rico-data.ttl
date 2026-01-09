@@ -1,0 +1,14 @@
+@base <http://example.org/> .
+@prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix schema: <https://schema.org/> .
+
+<relation> a rico:AccumulationRelation ;
+  rico:relationHasSource <record> ;
+  rico:relationHasTarget <agent>, <sdo-agent> .
+
+<record> a rico:Record .
+
+<agent> a rico:Agent .
+
+<sdo-agent> a schema:Person .
+
