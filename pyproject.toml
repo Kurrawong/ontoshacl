@@ -5,16 +5,20 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "pyshacl>=0.30.1",
     "rdflib>=7.5.0",
 ]
 
 [dependency-groups]
 dev = [
+    "pyshacl>=0.30.1",
     "black>=25.12.0",
     "isort>=7.0.0",
     "ruff>=0.14.11",
+    "pytest>=9.0.2",
 ]
+
+[project.scripts]
+ontoshacl = "ontoshacl:cli"
 
 [tool.isort]
 profile = "black"

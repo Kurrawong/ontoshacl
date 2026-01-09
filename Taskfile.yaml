@@ -1,0 +1,12 @@
+version: 3
+
+tasks:
+  format:
+    desc: Format the codebase
+    cmds:
+      - uv run black ontoshacl/
+      - uv run isort ontoshacl/
+
+  lint:
+    desc: Lint the codebase
+    cmd: uv run ruff check --fix ontoshacl/

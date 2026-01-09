@@ -1,0 +1,94 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX test: <http://example.org/test/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+test:
+    a owl:Ontology ;
+    rdfs:label "Minimal Test Ontology" ;
+.
+
+test:PropA
+    a owl:ObjectProperty ;
+    rdfs:label "Test Property A" ;
+    rdfs:domain test:ClassA ;
+    rdfs:range test:ClassB ;
+.
+
+test:PropB
+    a owl:ObjectProperty ;
+    rdfs:label "Test Property B" ;
+    rdfs:domain test:ClassA ;
+    rdfs:range test:ClassB ;
+.
+
+test:PropC
+    a owl:ObjectProperty ;
+    rdfs:label "Test Property C" ;
+    rdfs:domain test:ClassA ;
+    rdfs:range test:ClassB ;
+.
+
+test:PropD
+    a owl:ObjectProperty ;
+    rdfs:label "Test Property D" ;
+    rdfs:domain test:ClassA ;
+    rdfs:range test:ClassB ;
+.
+
+test:PropE
+    a owl:ObjectProperty ;
+    rdfs:label "Test Property E" ;
+    rdfs:domain test:ClassA ;
+.
+
+test:ClassA
+    a owl:Class ;
+    rdfs:label "Test Class A" ;
+    rdfs:subClassOf 
+        [
+            a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass
+                [
+                    a owl:Class ;
+                    owl:unionOf (
+                        test:ClassA
+                        test:ClassB
+                    ) ;
+                ] ;
+            owl:onProperty test:PropE ;
+        ] ,
+        [
+            a owl:Restriction ;
+            owl:maxQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+            owl:onClass test:ClassB ;
+            owl:onProperty test:PropC ;
+        ] ,
+        [
+            a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass test:ClassB ;
+            owl:onProperty test:PropA ;
+        ] ,
+        [
+            a owl:Restriction ;
+            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass test:ClassB ;
+            owl:onProperty test:PropD ;
+        ] ,
+        [
+            a owl:Restriction ;
+            owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass test:ClassB ;
+            owl:onProperty test:PropB ;
+        ] ;
+.
+
+test:ClassB
+    a owl:Class ;
+    rdfs:label "Test Class B" ;
+.
