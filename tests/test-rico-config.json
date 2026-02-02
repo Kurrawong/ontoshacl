@@ -3,11 +3,16 @@
   "uri": "https://www.ica.org/standards/RiC/ontology#",
   "target": "tests/output/test-rico.ttl",
   "namespace": "https://kurrawong.ai/validator/rico#",
-  "versionIRI": "0.0.1",
-  "creator": "https://kurrawong.ai/people#lawson-lewis",
-  "name": "RiC-O Validator",
-  "publisher": "https://kurrawong.ai",
   "base_ontology_prefix": "rico",
   "include_domain_range_restrictions": true,
-  "domain_range_restriction_severity": "SH.Warning"
+  "domain_range_restriction_severity": "SH.Warning",
+  "name": "RiC-O Validator",
+  "versionIRI": "0.0.1",
+  "creator": "https://kurrawong.ai/people#lawson-lewis",
+  "creator_name": "Lawson Lewis",
+  "creator_email": "lawson@kurrawong.ai",
+  "publisher": "https://kurrawong.ai",
+  "publisher_type": "organisation",
+  "publisher_name": "Kurrawong AI",
+  "publisher_url": "https://kurrawong.ai"
 }

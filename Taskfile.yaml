@@ -22,4 +22,10 @@ tasks:
     cmds:
       - uv run ontoshacl --config tests/test-rico-config.json
       - uv run pyshacl --shapes tests/validators/valpub.ttl tests/output/test-rico.ttl
-      - uv run pyshacl --shapes tests/output/test-rico.ttl tests/data/rico-data.ttl
+      - uv run pyshacl --shapes tests/output/test-rico.ttl tests/data/rico-valid.ttl
+
+  test:
+    desc: Run all tests
+    cmds:
+      - task: test:minimal
+      - task: test:rico

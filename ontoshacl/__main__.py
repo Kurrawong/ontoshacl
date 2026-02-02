@@ -5,7 +5,6 @@ CLI Entrypoint for ontoshacl
 
 from pathlib import Path
 
-
 import ontoshacl
 from ontoshacl.config import Configuration
 from ontoshacl.core import Ontology, Shacl
@@ -71,6 +70,14 @@ def cli():
         "domain_range_restriction_severity": final_config[
             "domain_range_restriction_severity"
         ],
+        "creator_type": final_config["creator_type"],
+        "creator_name": final_config["creator_name"],
+        "creator_email": final_config["creator_email"],
+        "creator_url": final_config["creator_url"],
+        "publisher_type": final_config["publisher_type"],
+        "publisher_name": final_config["publisher_name"],
+        "publisher_email": final_config["publisher_email"],
+        "publisher_url": final_config["publisher_url"],
     }
 
     shacl = Shacl(base_ontology=ont, **shacl_opts)

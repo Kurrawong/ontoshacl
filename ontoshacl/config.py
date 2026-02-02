@@ -27,9 +27,17 @@ class Configuration:
             "namespace": None,
             "versionIRI": None,
             "creator": None,
+            "creator_type": "person",  # person or organisation
+            "creator_name": None,
+            "creator_email": None,
+            "creator_url": None,
             "name": None,
             "description": None,
             "publisher": None,
+            "publisher_type": "person",  # person or organisation
+            "publisher_name": None,
+            "publisher_email": None,
+            "publisher_url": None,
             "dateCreated": None,
             "base_ontology_prefix": None,
             # SHACL Generation options
@@ -61,6 +69,19 @@ class Configuration:
             "--creator", help="Creator URI for the validator ontology", default=None
         )
         parser.add_argument(
+            "--creator-type",
+            help="Creator type (person or organisation)",
+            choices=["person", "organisation"],
+            default=None,
+        )
+        parser.add_argument("--creator-name", help="Creator name", default=None)
+        parser.add_argument(
+            "--creator-email", help="Creator email (for person)", default=None
+        )
+        parser.add_argument(
+            "--creator-url", help="Creator URL (for organisation)", default=None
+        )
+        parser.add_argument(
             "--name", help="Name for the validator ontology", default=None
         )
         parser.add_argument(
@@ -68,6 +89,19 @@ class Configuration:
         )
         parser.add_argument(
             "--publisher", help="Publisher URI for the validator ontology", default=None
+        )
+        parser.add_argument(
+            "--publisher-type",
+            help="Publisher type (person or organisation)",
+            choices=["person", "organisation"],
+            default=None,
+        )
+        parser.add_argument("--publisher-name", help="Publisher name", default=None)
+        parser.add_argument(
+            "--publisher-email", help="Publisher email (for person)", default=None
+        )
+        parser.add_argument(
+            "--publisher-url", help="Publisher URL (for organisation)", default=None
         )
         parser.add_argument(
             "--dateCreated",
@@ -146,7 +180,16 @@ class Configuration:
             config["versionIRI"] = config["namespace"][config["versionIRI"]]
 
         # Convert string literals to Literal objects
-        literal_fields = ["name", "description"]
+        literal_fields = [
+            "name",
+            "description",
+            "creator_name",
+            "creator_email",
+            "creator_url",
+            "publisher_name",
+            "publisher_email",
+            "publisher_url",
+        ]
         for field in literal_fields:
             if config[field] and isinstance(config[field], str):
                 config[field] = Literal(config[field])
@@ -171,6 +214,24 @@ class Configuration:
             config["include_domain_range_restrictions"] = config[
                 "include_domain_range_restrictions"
             ].lower() in ["true", "1", "yes"]
+
+        # Convert contact info URLs to proper datatype
+        if config["creator_email"] and isinstance(config["creator_email"], Literal):
+            config["creator_email"] = Literal(
+                str(config["creator_email"]), datatype=XSD.anyURI
+            )
+        if config["publisher_email"] and isinstance(config["publisher_email"], Literal):
+            config["publisher_email"] = Literal(
+                str(config["publisher_email"]), datatype=XSD.anyURI
+            )
+        if config["creator_url"] and isinstance(config["creator_url"], Literal):
+            config["creator_url"] = Literal(
+                str(config["creator_url"]), datatype=XSD.anyURI
+            )
+        if config["publisher_url"] and isinstance(config["publisher_url"], Literal):
+            config["publisher_url"] = Literal(
+                str(config["publisher_url"]), datatype=XSD.anyURI
+            )
 
         return config
 

@@ -172,6 +172,14 @@ class Shacl:
         base_ontology_prefix: str | None = None,
         include_domain_range_restrictions: bool = True,
         domain_range_restriction_severity: URIRef = SH.Warning,
+        creator_type: str = "person",
+        creator_name: Literal | None = None,
+        creator_email: Literal | None = None,
+        creator_url: Literal | None = None,
+        publisher_type: str = "person",
+        publisher_name: Literal | None = None,
+        publisher_email: Literal | None = None,
+        publisher_url: Literal | None = None,
     ):
         self.identifier = URIRef(namespace.strip("/#"))
         self.shape = namespace
@@ -253,16 +261,33 @@ class Shacl:
                 Literal(datetime.date.today().year, datatype=XSD.integer),
             )
         )
-        self.graph.add((creator, RDF.type, SDO.Person))
-        self.graph.add((creator, SDO.name, Literal("change me")))
-        self.graph.add(
-            (creator, SDO.email, Literal("name@example.org", datatype=XSD.anyURI))
-        )
-        self.graph.add((publisher, RDF.type, SDO.Person))
-        self.graph.add((publisher, SDO.name, Literal("change me")))
-        self.graph.add(
-            (publisher, SDO.email, Literal("name@example.org", datatype=XSD.anyURI))
-        )
+        # Add creator metadata
+        if creator_type == "person":
+            self.graph.add((creator, RDF.type, SDO.Person))
+            if creator_name:
+                self.graph.add((creator, SDO.name, creator_name))
+            if creator_email:
+                self.graph.add((creator, SDO.email, creator_email))
+        else:  # organisation
+            self.graph.add((creator, RDF.type, SDO.Organization))
+            if creator_name:
+                self.graph.add((creator, SDO.name, creator_name))
+            if creator_url:
+                self.graph.add((creator, SDO.url, creator_url))
+
+        # Add publisher metadata
+        if publisher and publisher_type == "person":
+            self.graph.add((publisher, RDF.type, SDO.Person))
+            if publisher_name:
+                self.graph.add((publisher, SDO.name, publisher_name))
+            if publisher_email:
+                self.graph.add((publisher, SDO.email, publisher_email))
+        elif publisher and publisher_type == "organisation":
+            self.graph.add((publisher, RDF.type, SDO.Organization))
+            if publisher_name:
+                self.graph.add((publisher, SDO.name, publisher_name))
+            if publisher_url:
+                self.graph.add((publisher, SDO.url, publisher_url))
         # --------------------------------------------------------------------------------
 
         # Add sh:PropertyShape's from the owl:ObjectProperty's in the base ontology
