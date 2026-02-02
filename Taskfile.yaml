@@ -11,7 +11,15 @@ tasks:
     desc: Lint the codebase
     cmd: uv run ruff check --fix ontoshacl/
 
-  test:
-    desc: Run Test case
+  test:minimal:
+    desc: Run minimal test case
     cmds:
-      - uv run ontoshacl --config tests/config.json
+      - uv run ontoshacl --config tests/test-minimal-config.json
+      - uv run pyshacl --shapes tests/validators/valpub.ttl tests/output/test-minimal.ttl
+
+  test:rico:
+    desc: Run rico test case
+    cmds:
+      - uv run ontoshacl --config tests/test-rico-config.json
+      - uv run pyshacl --shapes tests/validators/valpub.ttl tests/output/test-rico.ttl
+      - uv run pyshacl --shapes tests/output/test-rico.ttl tests/data/rico-data.ttl
