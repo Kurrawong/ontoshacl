@@ -1,0 +1,109 @@
+PREFIX : <https://www.ica.org/standards/RiC/ontology#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+:Record a owl:Class ;
+  rdfs:subClassOf :RecordResource ;
+.
+
+:RecordResource a owl:Class .
+
+:accumulationRelation_role
+    a
+        owl:ObjectProperty ,
+        owl:ReflexiveProperty ;
+    rdfs:label
+        "has the role of the Accumulation Relation"@en ,
+        "desempeña el papel de la Relación de Acumulación"@es ,
+        "a le rôle de la Relation d’accumulation"@fr ;
+    rdfs:comment """Connects a AccumulationRelation to itself. It is a reflexive
+         property, that can stand for an instance of the class when necessary, e.g. when you explore
+         a knowledge graph."""@en ;
+    rdfs:domain :AccumulationRelation ;
+    rdfs:isDefinedBy <https://www.ica.org/standards/RiC/ontology> ;
+    rdfs:range :AccumulationRelation ;
+    rdfs:subPropertyOf :organicProvenanceRelation_role ;
+    skos:changeNote
+        [
+            dc:date "2023-11-08" ;
+            rdf:value """In order to get a system of rolified Relation classes: created
+               the object property, with domain and range the AccumulationRelation rolified class.
+               Declared it as reflexive. Declared it(s) superproperty(ies)."""@en ;
+        ] ;
+    skos:scopeNote """This property "rolifies" the AccumulationRelation class. It
+         should be used only when you have to manage instances of the AccumulationRelation class, to
+         connect each instance to itself, in order to be able to infer, using OWL-RL and property
+         paths, the two shortcuts corresponding to this n-ary class."""@en ;
+.
+
+:AccumulationRelation
+    a owl:Class ;
+    rdfs:label
+        "Accumulation Relation"@en ,
+        "Relación de acumulación"@es ,
+        "Relation d’accumulation"@fr ;
+    rdfs:comment """Connects at least one Record Resource or Instantiation to at least
+         one Agent, when the Record Resource or Instantiation is or was accumulated by the Agent, be
+         it intentionally (collecting it) or not (receiving it in the course of its activities). The
+         Record Resource(s) or Instantiation(s) is the source of the Relation, and the Agent(s) is
+         the target."""@en ;
+    rdfs:isDefinedBy <https://www.ica.org/standards/RiC/ontology> ;
+    rdfs:subClassOf 
+        [
+            a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass
+                [
+                    a owl:Class ;
+                    owl:unionOf (
+                        :Instantiation
+                        :RecordResource
+                    ) ;
+                ] ;
+            owl:onProperty :relationHasSource ;
+        ] ,
+        [
+            a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass :Agent ;
+            owl:onProperty :relationHasTarget ;
+        ] ,
+        :OrganicProvenanceRelation ;
+    owl:equivalentClass
+        [
+            a owl:Restriction ;
+            owl:hasSelf true ;
+            owl:onProperty :accumulationRelation_role ;
+        ] ;
+    skos:changeNote 
+        [
+            dc:date "2023-11-08" ;
+            rdf:value """In order to get a system of rolified Relation classes: added an
+               equivalentClass object property; replaced the specific object properties by the
+               generic ones in the subClassOf declarations."""@en ;
+        ] ,
+        [
+            dc:date "2023-08-25" ;
+            rdf:value "Added a new rdfs:label in French."@en ;
+        ] ,
+        [
+            dc:date "2023-12-06" ;
+            rdf:value """Improved the description of the Relation class (rdfs:comment)
+               by clearly specifying how it is directed."""@en ;
+        ] ,
+        [
+            dc:date "2023-11-12" ;
+            rdf:value """Aligned with RiC-CM 1.0: updated the description
+               (rdfs:comment)."""@en ;
+        ] ,
+        [
+            dc:date "2023-11-02" ;
+            rdf:value "Added a new rdfs:label in Spanish."@en ;
+        ] ;
+    :RiCCMCorrespondingComponent """Class implementation of RiC-R028 and RiC-R028i
+         relations"""@en ;
+.

@@ -4,7 +4,6 @@ Core classes for Shacl generation
 """
 
 import datetime
-import warnings
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -296,11 +295,6 @@ class Shacl:
 
         # Add sh:PropertyShape's from the owl:Restriction's in the base ontology
         for restriction in self.ont.restrictions():
-            if not restriction.on_klass or restriction.on_property:
-                warnings.warn(
-                    "Found a restriction with no rules that we know how to process yet"
-                )
-                continue
             self.add_property_shape(from_restriction=restriction)
 
         # Add sh:NodeShape's for each owl:Class in the base ontology
@@ -346,6 +340,8 @@ class Shacl:
             max_cardinality = None
 
         if from_restriction:
+            if from_restriction.subklass.uri is None:
+                return
             target_klasses = set([from_restriction.subklass])
             target_property = from_restriction.on_property
             property_shape_uri = self.compute_shape_uri(from_restriction)

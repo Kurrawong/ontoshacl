@@ -5,7 +5,7 @@
   rico:relationHasSource <record> ;
   rico:relationHasTarget <agent> .
 
-<record> a rico:RecordResource .
+<record> a rico:Record .
 
 <agent> a rico:Agent .
 

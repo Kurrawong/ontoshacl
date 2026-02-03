@@ -17,15 +17,24 @@ tasks:
       - uv run ontoshacl --config tests/test-minimal-config.json
       - uv run pyshacl --shapes tests/validators/valpub.ttl tests/output/test-minimal.ttl
 
+  test:rico-minimal:
+    desc: Run minimal rico test case
+    cmds:
+      - uv run ontoshacl --config tests/test-rico-minimal-config.json
+      - uv run pyshacl --shapes tests/validators/valpub.ttl tests/output/test-rico-minimal.ttl
+      - uv run pyshacl --shapes tests/output/test-rico-minimal.ttl --ont-graph tests/ontologies/rico-minimal.ttl --inference rdfs tests/data/rico-valid.ttl
+
   test:rico:
     desc: Run rico test case
     cmds:
       - uv run ontoshacl --config tests/test-rico-config.json
       - uv run pyshacl --shapes tests/validators/valpub.ttl tests/output/test-rico.ttl
       - uv run pyshacl --shapes tests/output/test-rico.ttl tests/data/rico-valid.ttl
+      - uv run pyshacl --shapes tests/output/test-rico.ttl tests/data/rico-invalid.ttl
 
   test:
     desc: Run all tests
     cmds:
       - task: test:minimal
+      - task: test:rico-minimal
       - task: test:rico

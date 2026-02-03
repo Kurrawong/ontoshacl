@@ -20,5 +20,8 @@ dev = [
 [project.scripts]
 ontoshacl = "ontoshacl:cli"
 
+[tool.uv]
+package = true
+
 [tool.isort]
 profile = "black"
